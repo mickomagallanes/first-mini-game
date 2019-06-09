@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Gamedev Canvas Workshop</title>
+    <style>
+    	* { padding: 0; margin: 0; }
+    	canvas { background: #eee; display: block; margin: 2em auto 0; }
+    </style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="480" height="600" onclick="shoot()"></canvas>
+
+<script>
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+var array_circles = [];
+function Circle() {
+	this.x = canvas.width / 2;
+    this.y = canvas.height-30;
+    this.dx = 0;
+    this.dy = -2;
+	this.ballRadius = 30;
+	this.drawBall = function() {
+		ctx.beginPath();
+		ctx.arc(this.x, this.y, this.ballRadius, 0, Math.PI*2);
+		ctx.fillStyle = "#0095DD";
+		ctx.fill();
+		ctx.closePath();
+	};
+	
+}
+var drawing = {
+	
+	draw: function() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		
+		if (this.x - this.ballRadius > canvas.width || this.y + this.ballRadius < 0) {
+			return;
+		}
+		
+		for (var i = 0; i < array_circles.length; i++) {
+			array_circles[i].drawBall();
+			array_circles[i].x += array_circles[i].dx;
+			array_circles[i].y += array_circles[i].dy;
+		}
+		//console.log(this.y);
+		requestAnimationFrame(drawing.draw);
+	}
+};
+
+function shoot() {
+	var aso = new Circle();
+	array_circles.push(aso);
+	console.log(aso);
+	//setInterval(function() { drawing.draw() }, 40);
+	drawing.draw();
+}
+
+</script>
+
+</body>
+</html>
