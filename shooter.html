@@ -20,42 +20,46 @@ function Circle() {
 	this.x = canvas.width / 2;
     this.y = canvas.height-30;
     this.dx = 0;
-    this.dy = -2;
-	this.ballRadius = 30;
+    this.dy = -8;
+	this.radius = 20;
 	this.drawBall = function() {
 		ctx.beginPath();
-		ctx.arc(this.x, this.y, this.ballRadius, 0, Math.PI*2);
+		ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
 		ctx.fillStyle = "#0095DD";
 		ctx.fill();
 		ctx.closePath();
 	};
+	this.update = function() {
+		if ((this.y + this.radius) < 0) {
+			return false;
+		}
+
+		this.x += this.dx;
+		this.y += this.dy;
+		this.drawBall();
+		return true
+	}
 	
 }
-var drawing = {
-	
-	draw: function() {
+function animate() {
+	if (array_circles.length) {
+		requestAnimationFrame(animate);
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		
-		if (this.x - this.ballRadius > canvas.width || this.y + this.ballRadius < 0) {
-			return;
-		}
-		
 		for (var i = 0; i < array_circles.length; i++) {
-			array_circles[i].drawBall();
-			array_circles[i].x += array_circles[i].dx;
-			array_circles[i].y += array_circles[i].dy;
+			if (!array_circles[i].update()) {
+				array_circles.splice(i, 1);
+			}
 		}
-		//console.log(this.y);
-		requestAnimationFrame(drawing.draw);
 	}
-};
+}
 
 function shoot() {
 	var aso = new Circle();
 	array_circles.push(aso);
-	console.log(aso);
-	//setInterval(function() { drawing.draw() }, 40);
-	drawing.draw();
+	if (array_circles.length == 1) {
+		animate();
+	}
 }
 
 </script>
