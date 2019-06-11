@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Gamedev Canvas Workshop</title>
+    <title>Ball Shoot</title>
     <style>
     	* { padding: 0; margin: 0; }
     	canvas { background: #eee; display: block; margin: 2em auto 0; }
@@ -13,6 +13,7 @@
 <canvas id="myCanvas" width="480" height="600" onclick="shoot()"></canvas>
 
 <script>
+// shoot ball
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 var array_circles = [];
@@ -48,6 +49,7 @@ function animate() {
 		
 		for (var i = 0; i < array_circles.length; i++) {
 			if (!array_circles[i].update()) {
+			// remove object if it reaches out of screen
 				array_circles.splice(i, 1);
 			}
 		}
