@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Ball Shoot</title>
+    <title>Gamedev Canvas Workshop</title>
     <style>
     	* { padding: 0; margin: 0; }
     	canvas { background: #eee; display: block; margin: 2em auto 0; }
@@ -10,59 +10,93 @@
 </head>
 <body>
 
-<canvas id="myCanvas" width="480" height="600" onclick="shoot()"></canvas>
+<canvas id="myCanvas" width="480" height="600" style="border:1px solid #000000;" ></canvas>
 
 <script>
-// shoot ball
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
-var array_circles = [];
-function Circle() {
-	this.x = canvas.width / 2;
-    this.y = canvas.height-30;
-    this.dx = 0;
-    this.dy = -8;
-	this.radius = 20;
-	this.drawBall = function() {
-		ctx.beginPath();
-		ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
-		ctx.fillStyle = "#0095DD";
-		ctx.fill();
-		ctx.closePath();
-	};
-	this.update = function() {
-		if ((this.y + this.radius) < 0) {
-			return false;
-		}
 
-		this.x += this.dx;
-		this.y += this.dy;
-		this.drawBall();
-		return true
-	}
+ctx.fillStyle = "#ffffff";
+ctx.fillRect(0, 0, canvas.width-1, canvas.height-1);
+
+
+var array_bullet = [];
+var ball_interval;
+
+// tracing the mouse state
+var globalX;  // location of mouse point when it moves
+
+canvas.onmousemove= function(e) { 
+    mmove(e);
+}
+canvas.onmousedown = function(e) { 
+    ball_interval = setInterval(function(){ shoot(globalX) }, 80); 
+}
+canvas.onmouseup = function(e) {
+	clearInterval(ball_interval);
+}
+canvas.onmouseleave = function(e) {
+	clearInterval(ball_interval);
+}
+
+function ScreenTimer()
+{
+    // clear last sprites
+    ctx.fillStyle = "#ffffff";
+	ctx.fillRect(0, 0, canvas.width-1, canvas.height-1);
 	
-}
-function animate() {
-	if (array_circles.length) {
-		requestAnimationFrame(animate);
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		
-		for (var i = 0; i < array_circles.length; i++) {
-			if (!array_circles[i].update()) {
-			// remove object if it reaches out of screen
-				array_circles.splice(i, 1);
-			}
-		}
-	}
+    for(var i=0;i<array_bullet.length;i++)
+    {
+        // The bullet arriving the top, delete the object
+        if (array_bullet[i].Trigger()==false)
+        {
+            array_bullet.splice(i, 1);
+            i--;
+        }
+    }
+    requestAnimationFrame(ScreenTimer);
 }
 
-function shoot() {
-	var aso = new Circle();
-	array_circles.push(aso);
-	if (array_circles.length == 1) {
-		animate();
-	}
+
+class bullet {
+    constructor(x) {
+        this.x = x;
+        this.y = canvas.height-10;
+        this.dx = 0;
+        this.dy = -14;
+        this.ballRadius = 5;
+    }
+
+    Trigger()
+    {
+        if (this.y > 0)
+        {
+            this.y += this.dy;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.ballRadius, 0, Math.PI*2);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();
+        }
+        else
+            return false;
+        // The object is movine, return true
+        
+        return true;
+    }
+};
+
+function shoot(e) {
+	var buller_object = new bullet(e);
+    array_bullet.push(buller_object);
 }
+function mmove(e)
+{
+	globalX = e.offsetX;
+}
+
+// use it like a timer
+ScreenTimer();
 
 </script>
 
