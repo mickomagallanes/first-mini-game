@@ -78,8 +78,8 @@ function ScreenTimer()
 }
 
 class alien {
-    constructor() {
-        this.x = canvas.width/2;
+    constructor(x) {
+        this.x = x;
         this.y = 50;
         this.ballRadius = 20;
 		this.isDead = 0;
@@ -160,9 +160,11 @@ class explode {
     {
         if (!this.isDead)
         {
+			// remove object if sprite reaches the last
 			if (this.sprite_x / 128 == 4 && this.sprite_y / 128 == 4) {
 				this.isDead = 1;
 			}
+			// switch to lower part of sprite
 			else if (this.sprite_x / 128 == 4) {
 				this.sprite_x = 0;
 				this.sprite_y += 128;
@@ -178,8 +180,6 @@ class explode {
 			   this.y - 40,
 			   80,
 			   80);
-			console.log(this.sprite_x + " XXXXX");
-			console.log(this.sprite_y + " YYYYYYY");
 			this.sprite_x += 128;
 
         }
@@ -216,8 +216,12 @@ function explod22e(x, y) {
 }
 // use it like a timer
 ScreenTimer();
-var alien_object = new alien();
-array_alien.push(alien_object);
+var count = 50;
+for (var i=0; i<10; i++) {
+	var alien_object = new alien(count);
+	array_alien.push(alien_object);
+	count += 50;
+}
 </script>
 
 </body>
