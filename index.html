@@ -57,6 +57,14 @@ function ScreenTimer()
             i--;
         }
     }
+	for(var i=0;i<array_explode.length;i++)
+    {
+        if (array_explode[i].Trigger()==false)
+        {
+            array_explode.splice(i, 1);
+            i--;
+        }
+    }
 	for(var i=0;i<array_alien.length;i++)
     {
         array_alien[i].checkIfDead();
@@ -66,14 +74,7 @@ function ScreenTimer()
             i--;
         }
     }
-	for(var i=0;i<array_explode.length;i++)
-    {
-        if (array_explode[i].Trigger()==false)
-        {
-            array_explode.splice(i, 1);
-            i--;
-        }
-    }
+	
     requestAnimationFrame(ScreenTimer);
 }
 
