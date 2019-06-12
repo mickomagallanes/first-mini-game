@@ -21,6 +21,7 @@ ctx.fillRect(0, 0, canvas.width-1, canvas.height-1);
 
 
 var array_bullet = [];
+var array_alien = [];
 var ball_interval;
 
 // tracing the mouse state
@@ -54,9 +55,54 @@ function ScreenTimer()
             i--;
         }
     }
+	for(var i=0;i<array_alien.length;i++)
+    {
+        array_alien[i].checkIfDead();
+        if (array_alien[i].Trigger()==false)
+        {
+            array_alien.splice(i, 1);
+            i--;
+        }
+    }
     requestAnimationFrame(ScreenTimer);
 }
 
+class alien {
+    constructor() {
+        this.x = canvas.width/2;
+        this.y = 50;
+        this.ballRadius = 20;
+		this.isDead = 0;
+    }
+	checkIfDead() {
+		for(var i=0;i<array_bullet.length;i++) {
+			var y1 = this.y - (this.ballRadius);
+			var y2 = this.y + (this.ballRadius);
+			var x1 = this.x - (this.ballRadius);
+			var x2 = this.x + (this.ballRadius);
+			if ((array_bullet[i].y > y1 && array_bullet[i].y < y2) && (array_bullet[i].x > x1 && array_bullet[i].x < x2))
+			{
+				this.isDead = 1;
+				array_bullet[i].isDead = 1;
+			}
+		}
+	}
+    Trigger()
+    {
+        if (!this.isDead) {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.ballRadius, 0, Math.PI*2);
+            ctx.fillStyle = "red";
+            ctx.fill();
+            ctx.closePath();
+        }
+        else
+            return false;
+        // The object is movine, return true
+        
+        return true;
+    }
+};
 
 class bullet {
     constructor(x) {
@@ -65,11 +111,12 @@ class bullet {
         this.dx = 0;
         this.dy = -14;
         this.ballRadius = 5;
+		this.isDead = 0;
     }
 
     Trigger()
     {
-        if (this.y > 0)
+        if (this.y > 0 && !this.isDead)
         {
             this.y += this.dy;
             ctx.beginPath();
@@ -77,6 +124,7 @@ class bullet {
             ctx.fillStyle = "#0095DD";
             ctx.fill();
             ctx.closePath();
+
         }
         else
             return false;
@@ -97,7 +145,8 @@ function mmove(e)
 
 // use it like a timer
 ScreenTimer();
-
+var alien_object = new alien();
+array_alien.push(alien_object);
 </script>
 
 </body>
