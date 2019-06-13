@@ -23,56 +23,42 @@ ctx.fillRect(0, 0, canvas.width-1, canvas.height-1);
 var array_bullet = [];
 var array_alien = [];
 var array_explode = [];
-var ball_interval;
+var all_array = [array_bullet, array_explode, array_alien];	// for looping purpose
+var ball_interval;	// setInterval of shoot when mouse pressed
+
 var image1 = new Image();
 image1.src = './explode.png';
-// tracing the mouse state
+
+var explode_sound = new Audio('./explode.mp3');
+var gun_sound = new Audio('./gun.mp3');
+
+
 var globalX;  // location of mouse point when it moves
 
-canvas.onmousemove= function(e) { 
-    mmove(e);
-}
-canvas.onmousedown = function(e) { 
-    ball_interval = setInterval(function(){ shoot(globalX) }, 80); 
-}
-canvas.onmouseup = function(e) {
-	clearInterval(ball_interval);
-}
-canvas.onmouseleave = function(e) {
-	clearInterval(ball_interval);
-}
-
-function ScreenTimer()
-{
-    // clear last sprites
-    ctx.fillStyle = "#ffffff";
-	ctx.fillRect(0, 0, canvas.width-1, canvas.height-1);
+function ScreenTimer() {
 	
-    for(var i=0;i<array_bullet.length;i++)
-    {
-        // The bullet arriving the top, delete the object
-        if (array_bullet[i].Trigger()==false)
-        {
-            array_bullet.splice(i, 1);
-            i--;
-        }
-    }
-	for(var i=0;i<array_explode.length;i++)
-    {
-        if (array_explode[i].Trigger()==false)
-        {
-            array_explode.splice(i, 1);
-            i--;
-        }
-    }
-	for(var i=0;i<array_alien.length;i++)
-    {
-        array_alien[i].checkIfDead();
-        if (array_alien[i].Trigger()==false)
-        {
-            array_alien.splice(i, 1);
-            i--;
-        }
+    // clear drawings
+    ctx.fillStyle = "#ffffff";
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	
+    for(var i=0; i<all_array.length; i++) {
+		
+		var current_array = all_array[i];
+		
+		for(var p=0; p<current_array.length; p++) {
+			
+			if ('checkIfDead' in current_array[p]) {
+				current_array[p].checkIfDead();
+			}
+			
+			// remove to array when dead
+			if (current_array[p].Trigger()==false) {
+				current_array.splice(p, 1);
+				p--;
+			}
+			
+		}
+		
     }
 	
     requestAnimationFrame(ScreenTimer);
@@ -85,19 +71,24 @@ class alien {
         this.ballRadius = 20;
 		this.isDead = 0;
     }
+	
 	checkIfDead() {
 		for(var i=0;i<array_bullet.length;i++) {
 			var y1 = this.y - (this.ballRadius);
 			var y2 = this.y + (this.ballRadius);
 			var x1 = this.x - (this.ballRadius);
 			var x2 = this.x + (this.ballRadius);
+			
+			//check if bullet collides with alien
 			if ((array_bullet[i].y > y1 && array_bullet[i].y < y2) && (array_bullet[i].x > x1 && array_bullet[i].x < x2))
 			{
+				// set alien and bullet dead
 				this.isDead = 1;
 				array_bullet[i].isDead = 1;
 			}
 		}
 	}
+	
     Trigger()
     {
         if (!this.isDead) {
@@ -110,6 +101,11 @@ class alien {
         else {
 			var explode_object = new explode(this.x, this.y);
 			array_explode.push(explode_object);
+			
+			// play explode sound
+			explode_sound.pause();
+			explode_sound.currentTime = 0;
+			explode_sound.play();
             return false;
 		}
         // The object is movine, return true
@@ -123,7 +119,7 @@ class bullet {
         this.x = x;
         this.y = canvas.height-10;
         this.dx = 0;
-        this.dy = -14;
+        this.dy = -2;
         this.ballRadius = 5;
 		this.isDead = 0;
     }
@@ -193,35 +189,42 @@ class explode {
 };
 
 function shoot(e) {
+	
 	var bullet_object = new bullet(e);
     array_bullet.push(bullet_object);
+	
+	// play gun sound
+	gun_sound.pause();
+	gun_sound.currentTime = 0;
+	gun_sound.play();
 }
 function mmove(e)
 {
 	globalX = e.offsetX;
 }
-function explod22e(x, y) {
-	var explode_radius = 60;
-	ctx.fillStyle = "#ffffff";
-	ctx.fillRect(0, 0, canvas.width-1, canvas.height-1);
-	ctx.beginPath();
-    ctx.arc(x, y, explode_radius, 0, Math.PI*2);
-    ctx.fillStyle = "yellow";
-    ctx.fill();
-    ctx.closePath();
-	explode_radius -= 2;
 
-	//requestAnimationFrame(explode(x, y));
-	ctx.drawImage(image1, x, y);
-	image1.src = './explode.gif';
-}
 // use it like a timer
 ScreenTimer();
+
 var count = 50;
 for (var i=0; i<10; i++) {
 	var alien_object = new alien(count);
 	array_alien.push(alien_object);
 	count += 50;
+}
+
+
+canvas.onmousemove= function(e) { 
+    mmove(e);
+}
+canvas.onmousedown = function(e) { 
+    ball_interval = setInterval(function(){ shoot(globalX) }, 80); 
+}
+canvas.onmouseup = function(e) {
+	clearInterval(ball_interval);
+}
+canvas.onmouseleave = function(e) {
+	clearInterval(ball_interval);
 }
 </script>
 
