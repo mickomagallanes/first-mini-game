@@ -74,14 +74,11 @@ class alien {
 	
 	checkIfDead() {
 		for(var i=0;i<array_bullet.length;i++) {
-			var y1 = this.y - (this.ballRadius);
-			var y2 = this.y + (this.ballRadius);
-			var x1 = this.x - (this.ballRadius);
-			var x2 = this.x + (this.ballRadius);
 			
-			//check if bullet collides with alien
-			if ((array_bullet[i].y > y1 && array_bullet[i].y < y2) && (array_bullet[i].x > x1 && array_bullet[i].x < x2))
-			{
+			var distancex = this.x - array_bullet[i].x;
+			var distancey = this.y - array_bullet[i].y;
+			var distance = Math.sqrt((distancex * distancex) + (distancey * distancey));
+			if (distance < this.ballRadius + array_bullet[i].ballRadius) {
 				// set alien and bullet dead
 				this.isDead = 1;
 				array_bullet[i].isDead = 1;
@@ -119,7 +116,7 @@ class bullet {
         this.x = x;
         this.y = canvas.height-10;
         this.dx = 0;
-        this.dy = -15;
+        this.dy = -14;
         this.ballRadius = 5;
 		this.isDead = 0;
     }
@@ -178,7 +175,8 @@ class explode {
 			   80,
 			   80);
 			this.sprite_x += 128;
-
+			
+			
         }
         else
             return false;
