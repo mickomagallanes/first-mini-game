@@ -211,7 +211,6 @@ for (var i=0; i<10; i++) {
 	count += 50;
 }
 
-
 canvas.onmousemove= function(e) { 
     mmove(e);
 }
@@ -222,6 +221,21 @@ canvas.onmouseup = function(e) {
 	clearInterval(ball_interval);
 }
 canvas.onmouseleave = function(e) {
+	clearInterval(ball_interval);
+}
+
+
+// for mobile
+canvas.ontouchmove= function(e) { 
+    mmove(e);
+}
+canvas.ontouchstart = function(e) { 
+    ball_interval = setInterval(function(){ shoot(globalX) }, 80); 
+}
+canvas.ontouchend = function(e) {
+	clearInterval(ball_interval);
+}
+canvas.ontouchleave = function(e) {
 	clearInterval(ball_interval);
 }
 </script>
