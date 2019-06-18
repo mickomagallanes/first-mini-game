@@ -23,18 +23,30 @@ ctx.fillRect(0, 0, canvas.width-1, canvas.height-1);
 var array_bullet = [];
 var array_alien = [];
 var array_explode = [];
-var all_array = [array_bullet, array_explode, array_alien];	// for looping purpose
+var array_ship = [];
+var all_array = [array_bullet, array_explode, array_alien, array_ship];	// for looping purpose
+
 var ball_interval;	// setInterval of shoot when mouse pressed
 
-var image1 = new Image();
-image1.src = './explode.png';
+var isFired = false;	// prevents spacebar shoot from being stucked
+
+var ship_image = new Image();
+ship_image.src = './ship.png';
+var ship_x = canvas.width / 2;
+var ship_y = canvas.height - 50;
+var ship_size = 80;
+var ship_radius = ship_size / 2;
+
+
+var explosion_image = new Image();
+explosion_image.src = './explode.png';
 
 var explode_sound = new Audio('./explode.mp3');
 var gun_sound = new Audio('./gun.mp3');
 
 
-var globalX;  // location of mouse point when it moves
-
+var globalX = canvas.width / 2;  // location of ship when it moves
+var globalY = canvas.height - 50;  // location of ship when it moves
 function ScreenTimer() {
 	
     // clear drawings
@@ -112,9 +124,9 @@ class alien {
 };
 
 class bullet {
-    constructor(x) {
+    constructor(x, y) {
         this.x = x;
-        this.y = canvas.height-10;
+        this.y = y;
         this.dx = 0;
         this.dy = -14;
         this.ballRadius = 5;
@@ -165,7 +177,7 @@ class explode {
 			}
 			
 			ctx.drawImage(
-			   image1,
+			   explosion_image,
 			   this.sprite_x,
 			   this.sprite_y,
 			   128,
@@ -186,9 +198,38 @@ class explode {
     }
 };
 
-function shoot(e) {
+class ship {
+    constructor() {
+        this.x = ship_x;
+        this.y = ship_y;
+        this.dx = 0;
+        this.dy = 0;
+        this.ballRadius = 5;
+		this.isDead = 0;
+    }
+
+    Trigger()
+    {
+        if (!this.isDead)
+        {
+			ctx.drawImage(
+			   ship_image,
+			   this.x - 40,
+			   this.y - 40,
+			   ship_size,
+			   ship_size);
+        }
+        else
+            return false;
+        // The object is movine, return true
+        
+        return true;
+    }
+};
+
+function shoot(x, y) {
 	
-	var bullet_object = new bullet(e);
+	var bullet_object = new bullet(x, y);
     array_bullet.push(bullet_object);
 	
 	// play gun sound
@@ -196,48 +237,67 @@ function shoot(e) {
 	gun_sound.currentTime = 0;
 	gun_sound.play();
 }
-function mmove(e)
-{
-	globalX = e.offsetX;
+
+
+function init() {
+	var spaces = 50;
+	
+	var ship_object = new ship();
+	array_ship.push(ship_object);
+	
+	for (var i=0; i<10; i++) {
+		var alien_object = new alien(spaces);
+		array_alien.push(alien_object);
+		spaces += 50;
+	}
 }
 
 // use it like a timer
 ScreenTimer();
-
-var count = 50;
-for (var i=0; i<10; i++) {
-	var alien_object = new alien(count);
-	array_alien.push(alien_object);
-	count += 50;
-}
-
-canvas.onmousemove= function(e) { 
-    mmove(e);
-}
-canvas.onmousedown = function(e) { 
-    ball_interval = setInterval(function(){ shoot(globalX) }, 80); 
-}
-canvas.onmouseup = function(e) {
-	clearInterval(ball_interval);
-}
-canvas.onmouseleave = function(e) {
-	clearInterval(ball_interval);
-}
+init();
 
 
-// for mobile
-canvas.ontouchmove= function(e) { 
-    mmove(e);
+
+window.onkeydown = function(e) {
+	if (!isFired) { 
+		if(event.keyCode == 32) { 	// spacebar
+			ball_interval = setInterval(function(){ shoot(globalX, globalY) }, 80); 
+			
+		}
+		isFired = true;
+	}
+	
+	
+	if(event.keyCode == 37 && !(array_ship[0].x <= 0 + ship_radius)) { 	// left
+		array_ship[0].x -= 10;
+		globalX = array_ship[0].x;
+	}
+	
+	else if(event.keyCode == 38) { 	// up
+		array_ship[0].y -= 10;
+		globalY = array_ship[0].y;
+	}
+	
+	else if(event.keyCode == 39 && !(array_ship[0].x >= canvas.width - ship_radius)) { 	// right
+		array_ship[0].x += 10;
+		globalX = array_ship[0].x;
+	}
+	
+	else if(event.keyCode == 40 && !(array_ship[0].y >= canvas.height - ship_radius)) { 	// down
+		array_ship[0].y += 10;
+		globalY = array_ship[0].y;
+	}
 }
-canvas.ontouchstart = function(e) { 
-    ball_interval = setInterval(function(){ shoot(globalX) }, 80); 
+
+window.onkeyup = function(e) { 
+	isFired = false;
+	if(event.keyCode == 32) { 	// spacebar
+		clearInterval(ball_interval);
+	}
+    
 }
-canvas.ontouchend = function(e) {
-	clearInterval(ball_interval);
-}
-canvas.ontouchleave = function(e) {
-	clearInterval(ball_interval);
-}
+
+
 </script>
 
 </body>
