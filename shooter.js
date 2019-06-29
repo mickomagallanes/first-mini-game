@@ -1,8 +1,12 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
-ctx.fillStyle = "#ffffff";
-ctx.fillRect(0, 0, canvas.width - 1, canvas.height - 1);
+var space_image = new Image();
+space_image.src = "./space.jpg";
+ctx.drawImage(space_image, 0, 0, canvas.width - 1, canvas.height - 1);
+
+// ctx.fillStyle = "#ffffff";
+// ctx.fillRect(0, 0, canvas.width - 1, canvas.height - 1);
 
 var array_bullet = [];
 var array_alien = [];
@@ -40,8 +44,7 @@ var globalY = ship_y; // location of ship when it moves
 
 function ScreenTimer() {
   // clear drawings
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.drawImage(space_image, 0, 0, canvas.width, canvas.height);
 
   for (var i = 0; i < all_array.length; i++) {
     var current_array = all_array[i];
@@ -114,7 +117,7 @@ class bullet {
       this.y += this.dy;
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = "#0095DD";
+      ctx.fillStyle = "yellow";
       ctx.fill();
       ctx.closePath();
     } else return false;
@@ -130,6 +133,7 @@ class explode {
     this.isDead = 0;
     this.sprite_x = 0;
     this.sprite_y = 0;
+    this.counter = 0; // to make the animation of explosion slower
   }
 
   Trigger() {
@@ -155,7 +159,14 @@ class explode {
         80,
         80
       );
-      this.sprite_x += 128;
+
+      // for slower animation
+      if (this.counter == 2) {
+        this.sprite_x += 128;
+        this.counter = 0;
+      } else {
+        this.counter++;
+      }
     } else return false;
 
     return true;
@@ -227,22 +238,6 @@ function shoot(x, y) {
   gun_sound.play();
 }
 
-function init() {
-  var spaces = 50;
-
-  var ship_object = new ship();
-  array_ship.push(ship_object);
-
-  var hitbox_object = new hitbox();
-  array_hitbox.push(hitbox_object);
-
-  for (var i = 0; i < 10; i++) {
-    var alien_object = new alien(spaces);
-    array_alien.push(alien_object);
-    spaces += 50;
-  }
-}
-
 function checkMove() {
   // left
   if (event.keyCode == 37 && !(globalX <= 0)) {
@@ -294,6 +289,22 @@ function triggerExplode(entity) {
   explode_sound.currentTime = 0;
   explode_sound.play();
   return false;
+}
+
+function init() {
+  var spaces = 50;
+
+  var ship_object = new ship();
+  array_ship.push(ship_object);
+
+  var hitbox_object = new hitbox();
+  array_hitbox.push(hitbox_object);
+
+  for (var i = 0; i < 10; i++) {
+    var alien_object = new alien(spaces);
+    array_alien.push(alien_object);
+    spaces += 50;
+  }
 }
 
 // use it like a timer
