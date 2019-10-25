@@ -35,12 +35,12 @@ array_ship.push(ship_object);
 //var hitbox_object = new hitbox_ship();
 //array_hitbox.push(hitbox_object);
 
-for (var i = 0; i < 10; i++) {
-    var alien_object = new alien(spaces);
-    array_alien.push(alien_object);
-    spaces += 50;
-}
-
+// for (var i = 0; i < 9; i++) {
+//     var alien_object = new alien(spaces);
+//     array_alien.push(alien_object);
+//     spaces += 50;
+// }
+pattern1();
 window.onkeydown = function (e) {
     if (array_ship[0]) {
         if (!isFired) {

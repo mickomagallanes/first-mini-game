@@ -96,3 +96,24 @@ function triggerExplode(entity) {
     explode_sound.play();
     return false;
 }
+
+function pattern1() {
+    var spaces = 400;
+
+    var checkerCallback = function () {
+        if (this.y >= canvas.height / 2) {
+            this.x += 0.6;
+            this.y += 3.8;
+        } else {
+            this.x -= 0.9;
+            this.y += 1.8;
+        }
+    };
+
+    for (let i = 1; i < 20; i++) {
+        setTimeout(function timer() {
+            var alien_object = new alien(spaces, checkerCallback);
+            array_alien.push(alien_object);
+        }, i * 1000);
+    }
+}

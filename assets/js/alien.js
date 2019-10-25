@@ -1,7 +1,8 @@
 class alien {
-    constructor(x) {
+    constructor(x, callback) {
+        this.callback = callback;
         this.x = x;
-        this.y = 50;
+        this.y = -100;
         this.radius = 20;
         this.isDead = 0;
         this.hitbox_width = (alien_size / 2) - 10;
@@ -17,15 +18,20 @@ class alien {
                 // set alien and bullet dead
                 this.isDead = 1;
                 array_bullet[i].isDead = 1;
+            } else if (this.hitbox_y + this.hitbox_height > canvas.height) {
+                this.isDead = 1;
             }
         }
 
     }
 
     Trigger() {
+        this.hitbox_x = this.x - this.hitbox_width / 2;
+        this.hitbox_y = this.y - this.hitbox_height / 2;
         if (!this.isDead) {
             //this.drawHitbox();
             this.drawAlien();
+            this.callback();
             return true;
         } else {
             triggerExplode(this);
