@@ -5,13 +5,21 @@ class ship {
         this.dx = 0;
         this.dy = 0;
         this.isDead = 0;
+        this.hitbox_width = ship_size / 2;
+        this.hitbox_height = ship_size - 10;
+        this.hitbox_x = globalX - this.hitbox_width / 2;
+        this.hitbox_y = globalY - this.hitbox_height / 2;
+
     }
 
     Trigger() {
         this.x = globalX;
         this.y = globalY;
+        this.hitbox_x = globalX - this.hitbox_width / 2;
+        this.hitbox_y = globalY - this.hitbox_height / 2;
         if (!this.isDead) {
-            ctx.drawImage(ship_image, this.x - 40, this.y - 40, ship_size, ship_size);
+            this.drawShip();
+            //this.drawHitbox();
         } else {
             triggerExplode(this);
             return false;
@@ -19,29 +27,12 @@ class ship {
 
         return true;
     }
-}
 
-class hitbox_ship {
-    constructor() {
-        this.width = ship_size / 2;
-        this.height = ship_size - 10;
-        this.x = globalX - this.width / 2;
-        this.y = globalY - this.height / 2;
-    }
-
-    Trigger() {
-        // update hitbox, come up with the ship
-        this.x = globalX - this.width / 2;
-        this.y = globalY - this.height / 2;
-        if (!this.isDead) {
-            // ctx.beginPath();
-            // ctx.rect(this.x, this.y, this.width, this.height);
-            // ctx.fillStyle = "red";
-            // ctx.fill();
-
-            return true;
-        } else return false;
-
+    drawHitbox() {
+        ctx.beginPath();
+        ctx.rect(this.hitbox_x, this.hitbox_y, this.hitbox_width, this.hitbox_height);
+        ctx.fillStyle = "red";
+        ctx.fill();
 
     }
 
@@ -51,9 +42,12 @@ class hitbox_ship {
                 // set alien and bullet dead
                 this.isDead = 1;
                 array_alien[i].isDead = 1;
-                array_ship[0].isDead = 1;
                 clearInterval(ball_interval);
             }
         }
+    }
+
+    drawShip() {
+        ctx.drawImage(ship_image, this.x - 40, this.y - 40, ship_size, ship_size);
     }
 }

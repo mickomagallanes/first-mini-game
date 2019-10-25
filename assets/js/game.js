@@ -75,10 +75,11 @@ function intersects_alien(circle, rect) {
 
 function rect2rect_intersects(rect1, rect2) {
 
-    if (rect1.x < rect2.hitbox_x + rect2.hitbox_width &&
-        rect1.x + rect1.width > rect2.hitbox_x &&
-        rect1.y < rect2.hitbox_y + rect2.hitbox_height &&
-        rect1.y + rect1.height > rect2.hitbox_y) {
+    if (rect1.hitbox_x < rect2.hitbox_x + rect2.hitbox_width &&
+        rect1.hitbox_x + rect1.hitbox_width > rect2.hitbox_x &&
+        rect1.hitbox_y < rect2.hitbox_y + rect2.hitbox_height &&
+        rect1.hitbox_y + rect1.hitbox_height > rect2.hitbox_y) {
+        console.log("oo nga");
         return true;
     }
 }

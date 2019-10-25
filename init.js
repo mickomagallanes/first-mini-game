@@ -32,8 +32,8 @@ var spaces = 50;
 var ship_object = new ship();
 array_ship.push(ship_object);
 
-var hitbox_object = new hitbox_ship();
-array_hitbox.push(hitbox_object);
+//var hitbox_object = new hitbox_ship();
+//array_hitbox.push(hitbox_object);
 
 for (var i = 0; i < 10; i++) {
     var alien_object = new alien(spaces);
