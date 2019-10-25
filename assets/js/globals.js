@@ -5,6 +5,12 @@ var ship_y = canvas.height - 50;
 var ship_size = 80;
 var ship_radius = ship_size / 2;
 
+var alien_size = 100;
+var alien_radius = alien_size / 2;
+
+var alien_image = new Image();
+alien_image.src = "assets/img/alien.png";
+
 var globalX = ship_x; // location of ship when it moves
 var globalY = ship_y; // location of ship when it moves
 

@@ -34,15 +34,20 @@ class hitbox_ship {
         this.x = globalX - this.width / 2;
         this.y = globalY - this.height / 2;
         if (!this.isDead) {
-            ctx.rect(this.x, this.y, this.width, this.height);
+            // ctx.beginPath();
+            // ctx.rect(this.x, this.y, this.width, this.height);
+            // ctx.fillStyle = "red";
+            // ctx.fill();
+
+            return true;
         } else return false;
 
-        return true;
+
     }
 
     checkIfDead() {
         for (var i = 0; i < array_alien.length; i++) {
-            if (intersects(array_alien[i], this)) {
+            if (rect2rect_intersects(this, array_alien[i])) {
                 // set alien and bullet dead
                 this.isDead = 1;
                 array_alien[i].isDead = 1;
