@@ -32,15 +32,12 @@ var spaces = 50;
 var ship_object = new ship();
 array_ship.push(ship_object);
 
-//var hitbox_object = new hitbox_ship();
-//array_hitbox.push(hitbox_object);
 
-// for (var i = 0; i < 9; i++) {
-//     var alien_object = new alien(spaces);
-//     array_alien.push(alien_object);
-//     spaces += 50;
-// }
-pattern1();
+setTimeout(function () {
+    pattern1();
+}, 4000);
+
+//pattern1();
 //pattern2();
 
 window.onkeydown = function (e) {
@@ -50,7 +47,7 @@ window.onkeydown = function (e) {
                 // spacebar
                 ball_interval = setInterval(function () {
                     shoot(globalX, globalY);
-                }, 150);
+                }, 180);
             }
             isFired = true;
         }

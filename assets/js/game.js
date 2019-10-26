@@ -111,13 +111,11 @@ function roll_whole(min, max) {
 
 function pattern1() {
 
-
-
     var checkerCallback = function () {
         if (!this.isChecked) {
             this.roll_dice = roll_2_sides();
             this.roll_dec = roll_decimal(1, 60);
-            this.roll_whole = roll_whole(2, 10);
+            this.roll_whole = roll_whole(4, 10);
 
         }
         this.isChecked = true;
@@ -145,35 +143,61 @@ function pattern1() {
         }
     };
 
-    for (let i = 1; i < 200; i++) {
+    for (let i = 1; i < 100; i++) {
 
         let spaces = roll_whole(150, 350);
 
-        setTimeout(function timer() {
+        setTimeout(function () {
             var alien_object = new alien(spaces, checkerCallback);
             array_alien.push(alien_object);
         }, i * 500);
     }
+
 }
 
-function pattern2() {
-    var spaces = 250;
+function pattern_surprise1() {
 
     var checkerCallback = function () {
-        if (this.y >= canvas.height / 2) {
-            this.x += 0.6;
-            this.y += 3.8;
+        if (!this.isChecked) {
+            this.roll_dice = roll_2_sides();
+            this.roll_dec = roll_decimal(1, 60);
+            this.roll_whole = roll_whole(2, 5);
+
+        }
+
+        this.isChecked = true;
+
+        if (this.y + 50 >= canvas.height / 2) {
+
+            if (this.roll_dice) {
+                this.x += this.roll_dec;
+            } else {
+                this.x -= this.roll_dec;
+            }
+
+            this.y += this.roll_whole;
+
+            //this.y += 5;
         } else {
-            this.x -= 0.9;
-            this.y += 1.8;
+
+            if (this.roll_dice) {
+                this.x -= 0.9;
+            } else {
+                this.x += 0.9;
+            }
+
+            this.y += 10;
         }
     };
 
-    for (let i = 1; i < 20; i++) {
-        setTimeout(function timer() {
+    for (let i = 1; i < 100; i++) {
+
+        let spaces = roll_whole(150, 350);
+
+        setTimeout(function () {
             var alien_object = new alien(spaces, checkerCallback);
             array_alien.push(alien_object);
-        }, i * 1000);
+        }, i * 500);
     }
 }
 
