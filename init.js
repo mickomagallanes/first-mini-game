@@ -11,7 +11,7 @@ function ScreenTimer() {
             }
 
             // remove to array when dead
-            if (current_array[p].Trigger() == false) {
+            if (current_array[p].Trigger() == false || checkIfEntityIsOutside(current_array[p])) {
                 current_array.splice(p, 1);
                 p--;
             }
@@ -41,6 +41,8 @@ array_ship.push(ship_object);
 //     spaces += 50;
 // }
 pattern1();
+//pattern2();
+
 window.onkeydown = function (e) {
     if (array_ship[0]) {
         if (!isFired) {
@@ -48,7 +50,7 @@ window.onkeydown = function (e) {
                 // spacebar
                 ball_interval = setInterval(function () {
                     shoot(globalX, globalY);
-                }, 80);
+                }, 150);
             }
             isFired = true;
         }

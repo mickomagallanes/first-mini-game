@@ -97,8 +97,67 @@ function triggerExplode(entity) {
     return false;
 }
 
+function roll_2_sides() {
+    return Math.floor(Math.random() * 2);
+}
+
+function roll_decimal(min, max) {
+    return (Math.floor(Math.random() * (max - min + 1)) + min) / 10
+}
+
+function roll_whole(min, max) {
+    return (Math.floor(Math.random() * (max - min + 1)) + min)
+}
+
 function pattern1() {
-    var spaces = 400;
+
+
+
+    var checkerCallback = function () {
+        if (!this.isChecked) {
+            this.roll_dice = roll_2_sides();
+            this.roll_dec = roll_decimal(1, 60);
+            this.roll_whole = roll_whole(2, 10);
+
+        }
+        this.isChecked = true;
+
+        if (this.y + 80 >= canvas.height / 2) {
+
+            if (this.roll_dice) {
+                this.x += this.roll_dec;
+            } else {
+                this.x -= this.roll_dec;
+            }
+
+            this.y += this.roll_whole;
+
+            //this.y += 5;
+        } else {
+
+            if (this.roll_dice) {
+                this.x -= 0.9;
+            } else {
+                this.x += 0.9;
+            }
+
+            this.y += 2;
+        }
+    };
+
+    for (let i = 1; i < 200; i++) {
+
+        let spaces = roll_whole(150, 350);
+
+        setTimeout(function timer() {
+            var alien_object = new alien(spaces, checkerCallback);
+            array_alien.push(alien_object);
+        }, i * 500);
+    }
+}
+
+function pattern2() {
+    var spaces = 250;
 
     var checkerCallback = function () {
         if (this.y >= canvas.height / 2) {
@@ -115,5 +174,13 @@ function pattern1() {
             var alien_object = new alien(spaces, checkerCallback);
             array_alien.push(alien_object);
         }, i * 1000);
+    }
+}
+
+function checkIfEntityIsOutside(obj) {
+    if (obj.x < -100 || obj.x > canvas.width + 100 || obj.y > canvas.height + 100 || obj.y < -100) {
+        return true
+    } else {
+        return false;
     }
 }
