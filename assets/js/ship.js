@@ -22,6 +22,7 @@ class ship {
             //this.drawHitbox();
         } else {
             triggerExplode(this);
+            isGameOver = true;
             return false;
         }
 

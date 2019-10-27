@@ -263,14 +263,19 @@ function pattern_alien2() {
         }
     }
 
-    for (let i = 1; i < 100; i++) {
+    var timeout = undefined;
+
+    for (let i = 1; i < 3; i++) {
 
         let spaces = roll_whole(150, 350);
 
-        setTimeout(function () {
+        timeout = setTimeout(function () {
             var alien_object = new alien(spaces, alien_image2, movementFunc, lifeFunc);
             array_alien.push(alien_object);
         }, i * 700);
+    }
+    if (timeout) {
+        timeout_array.push(timeout);
     }
 
 }

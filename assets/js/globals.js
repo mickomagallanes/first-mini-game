@@ -18,6 +18,10 @@ bullet_image.src = "assets/img/bullet.png";
 
 var bullet_size = 30;
 
+var isGameOver = false;
+
+var requestId = undefined;
+
 var globalX = ship_x; // location of ship when it moves
 var globalY = ship_y; // location of ship when it moves
 
@@ -34,7 +38,7 @@ var all_array = [
     array_hitbox
 ]; // for looping purpose
 
-
+var timeout_array = [];
 
 var ball_interval; // setInterval of shoot when mouse pressed
 

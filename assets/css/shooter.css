@@ -2,8 +2,24 @@
   padding: 0;
   margin: 0;
 }
+
 canvas {
   background: #eee;
   display: block;
   margin: 2em auto 0;
+}
+
+#wrapper {
+  position: relative;
+}
+
+#welcome {
+  z-index: 10000;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%);
+  font-size: 15px;
+  color: azure;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
