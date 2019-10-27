@@ -40,6 +40,8 @@ var all_array = [
 
 var timeout_array = [];
 
+var spawner_array = [];
+
 var ball_interval; // setInterval of shoot when mouse pressed
 
 var isFired = false; // prevents spacebar shoot from being stucked

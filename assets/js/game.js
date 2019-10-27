@@ -161,14 +161,18 @@ function pattern1() {
         }
     };
 
-    for (let i = 1; i < 100; i++) {
+    for (let i = 1; i < 75; i++) {
 
         let spaces = roll_whole(150, 350);
 
-        setTimeout(function () {
+        timeout = setTimeout(function () {
             var alien_object = new alien(spaces, alien_image, movementFunc);
             array_alien.push(alien_object);
         }, i * 500);
+    }
+
+    if (timeout) {
+        timeout_array.push(timeout);
     }
 
 }
@@ -208,15 +212,20 @@ function pattern_surprise1() {
         }
     };
 
-    for (let i = 1; i < 100; i++) {
+    for (let i = 1; i < 75; i++) {
 
         let spaces = roll_whole(150, 350);
 
-        setTimeout(function () {
+        timeout = setTimeout(function () {
             var alien_object = new alien(spaces, alien_image, movementFunc);
             array_alien.push(alien_object);
         }, i * 500);
     }
+
+    if (timeout) {
+        timeout_array.push(timeout);
+    }
+
 }
 
 function pattern_alien2() {
@@ -265,7 +274,7 @@ function pattern_alien2() {
 
     var timeout = undefined;
 
-    for (let i = 1; i < 3; i++) {
+    for (let i = 1; i < 75; i++) {
 
         let spaces = roll_whole(150, 350);
 
@@ -274,6 +283,7 @@ function pattern_alien2() {
             array_alien.push(alien_object);
         }, i * 700);
     }
+
     if (timeout) {
         timeout_array.push(timeout);
     }

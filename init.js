@@ -93,9 +93,8 @@ function resetGame() {
 
     this.document.getElementById("welcome").style.display = "block";
 
-    this.document.getElementById("welcome").innerHTML = "GAME OVER, PRESS ENTER TO PLAY AGAIN";
+    this.document.getElementById("welcome").innerHTML = "Game over, press ENTER to play again";
 
-    console.log(timeout_array.length);
     for (var i = 0; i < timeout_array.length; i++) {
         clearTimeout(timeout_array[i]);
         timeout_array.splice(i, 1);
