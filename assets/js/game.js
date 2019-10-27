@@ -111,7 +111,7 @@ function roll_whole(min, max) {
 
 function pattern1() {
 
-    var checkerCallback = function () {
+    var movementFunc = function () {
         if (!this.isChecked) {
             this.roll_dice = roll_2_sides();
             this.roll_dec = roll_decimal(1, 60);
@@ -148,7 +148,7 @@ function pattern1() {
         let spaces = roll_whole(150, 350);
 
         setTimeout(function () {
-            var alien_object = new alien(spaces, checkerCallback);
+            var alien_object = new alien(spaces, alien_image, movementFunc);
             array_alien.push(alien_object);
         }, i * 500);
     }
@@ -157,7 +157,7 @@ function pattern1() {
 
 function pattern_surprise1() {
 
-    var checkerCallback = function () {
+    var movementFunc = function () {
         if (!this.isChecked) {
             this.roll_dice = roll_2_sides();
             this.roll_dec = roll_decimal(1, 60);
@@ -195,10 +195,66 @@ function pattern_surprise1() {
         let spaces = roll_whole(150, 350);
 
         setTimeout(function () {
-            var alien_object = new alien(spaces, checkerCallback);
+            var alien_object = new alien(spaces, alien_image, movementFunc);
             array_alien.push(alien_object);
         }, i * 500);
     }
+}
+
+function pattern_alien2() {
+
+    var movementFunc = function () {
+        if (!this.isChecked) {
+            this.roll_dice = roll_2_sides();
+            this.roll_dec = roll_decimal(1, 20);
+            this.roll_whole = roll_whole(1.2, 2.6);
+            this.lives = 1;
+        }
+        this.isChecked = true;
+
+        if (this.y + 80 >= canvas.height / 2) {
+
+            if (this.roll_dice) {
+                this.x += this.roll_dec;
+            } else {
+                this.x -= this.roll_dec;
+            }
+
+            this.y += this.roll_whole;
+
+        } else {
+
+            if (this.roll_dice) {
+                this.x -= 0.6;
+            } else {
+                this.x += 0.6;
+            }
+
+            this.y += 1.2;
+        }
+    };
+
+    var lifeFunc = function (bullet) {
+        this.y -= 18;
+        if (this.lives) {
+            this.lives--;
+            bullet.isDead = 1;
+            return true
+        } else {
+            return false;
+        }
+    }
+
+    for (let i = 1; i < 100; i++) {
+
+        let spaces = roll_whole(150, 350);
+
+        setTimeout(function () {
+            var alien_object = new alien(spaces, alien_image2, movementFunc, lifeFunc);
+            array_alien.push(alien_object);
+        }, i * 700);
+    }
+
 }
 
 function checkIfEntityIsOutside(obj) {
