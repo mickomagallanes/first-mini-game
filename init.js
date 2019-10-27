@@ -97,8 +97,10 @@ function resetGame() {
 
     for (var i = 0; i < timeout_array.length; i++) {
         clearTimeout(timeout_array[i]);
-        timeout_array.splice(i, 1);
+        //timeout_array.splice(i, 1);
     }
+
+
 
     isGameOver = false;
     ship_x = canvas.width / 2;
@@ -117,7 +119,7 @@ function resetGame() {
         array_ship,
         array_hitbox
     ]; // for looping purpose
-
+    timeout_array = [];
     ctx.drawImage(space_image, 0, 0, canvas.width, canvas.height);
 
     window.onkeydown = function (e) {

@@ -282,11 +282,13 @@ function pattern_alien2() {
             var alien_object = new alien(spaces, alien_image2, movementFunc, lifeFunc);
             array_alien.push(alien_object);
         }, i * 700);
+
+        if (timeout) {
+            timeout_array.push(timeout);
+        }
     }
 
-    if (timeout) {
-        timeout_array.push(timeout);
-    }
+
 
 }
 
