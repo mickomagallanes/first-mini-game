@@ -6,7 +6,6 @@ var ship_size = 80;
 var ship_radius = ship_size / 2;
 
 var alien_size = 55;
-var alien_radius = alien_size / 2;
 
 var alien_image = new Image();
 alien_image.src = "assets/img/alien.png";
@@ -14,6 +13,10 @@ alien_image.src = "assets/img/alien.png";
 var alien_image2 = new Image();
 alien_image2.src = "assets/img/alien2.png";
 
+var bullet_image = new Image();
+bullet_image.src = "assets/img/bullet.png";
+
+var bullet_size = 30;
 
 var globalX = ship_x; // location of ship when it moves
 var globalY = ship_y; // location of ship when it moves

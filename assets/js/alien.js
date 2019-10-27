@@ -13,18 +13,17 @@ class alien {
         this.x = x;
         this.alien_img = alien_img;
         this.y = -50;
-        this.radius = 20;
         this.isDead = 0;
         this.hitbox_width = alien_size - 6;
         this.hitbox_height = alien_size - 35;
-        this.hitbox_x = this.x - (this.hitbox_width - 2);
-        this.hitbox_y = this.y - (this.hitbox_height + 13);
+        this.hitbox_x = this.x - (this.hitbox_width / 2);
+        this.hitbox_y = this.y - (this.hitbox_height / 2);
     }
 
     checkIfDead() {
         for (var i = 0; i < array_bullet.length; i++) {
 
-            if (intersects_alien(array_bullet[i], this)) {
+            if (rect2rect_intersects(array_bullet[i], this)) {
                 if (!this.life_func(array_bullet[i])) {
                     // set alien and bullet dead
                     this.isDead = 1;
@@ -42,9 +41,9 @@ class alien {
 
             this.movement_func();
 
-            this.hitbox_x = this.x - (this.hitbox_width - 2);
-            this.hitbox_y = this.y - (this.hitbox_height + 13);
-
+            this.hitbox_x = this.x - (this.hitbox_width / 2);
+            this.hitbox_y = this.y - (this.hitbox_height / 2);
+            //this.drawHitbox();
             this.drawAlien();
 
             return true;
@@ -65,7 +64,7 @@ class alien {
     }
 
     drawAlien() {
-        ctx.drawImage(this.alien_img, this.x - 50, this.y - 50, alien_size, alien_size);
+        ctx.drawImage(this.alien_img, this.x - (alien_size / 2), this.y - (alien_size / 2), alien_size, alien_size);
     }
 
 }

@@ -35,6 +35,8 @@ array_ship.push(ship_object);
 
 setTimeout(function () {
     pattern1();
+    //pattern_surprise1();
+    //pattern_alien2();
 }, 4000);
 
 //pattern1();
