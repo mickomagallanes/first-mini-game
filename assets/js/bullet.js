@@ -1,8 +1,8 @@
 class bullet {
-    constructor(x, y) {
+    constructor(x, y, angle) {
         this.x = x;
         this.y = y;
-        this.dx = 0;
+        this.dx = angle;
         this.dy = -14;
         this.isDead = 0;
 
@@ -15,6 +15,10 @@ class bullet {
     Trigger() {
         if (this.y > 0 && !this.isDead) {
             this.y += this.dy;
+
+            if (this.dx != undefined) {
+                this.x -= this.dx;
+            }
 
             this.hitbox_x = this.x - (this.hitbox_width / 2);
             this.hitbox_y = this.y - (this.hitbox_height / 2);

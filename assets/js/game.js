@@ -1,11 +1,20 @@
-function shoot(x, y) {
-    var bullet_object = new bullet(x, y);
+function shoot(x, y, angle) {
+    var bullet_object = new bullet(x, y, angle);
     array_bullet.push(bullet_object);
 
     // play gun sound
     gun_sound.pause();
     gun_sound.currentTime = 0;
-    gun_sound.play();
+    var promise = gun_sound.play();
+
+    if (promise !== undefined) {
+        promise.then(_ => {
+            // Autoplay started!
+        }).catch(error => {
+            // Autoplay was prevented.
+            // Show a "Play" button so that user can start playback.
+        });
+    }
 }
 
 function checkMove() {
@@ -79,7 +88,6 @@ function rect2rect_intersects(rect1, rect2) {
         rect1.hitbox_x + rect1.hitbox_width > rect2.hitbox_x &&
         rect1.hitbox_y < rect2.hitbox_y + rect2.hitbox_height &&
         rect1.hitbox_y + rect1.hitbox_height > rect2.hitbox_y) {
-        console.log("oo nga");
         return true;
     }
 }
@@ -93,7 +101,17 @@ function triggerExplode(entity) {
     // play explode sound
     explode_sound.pause();
     explode_sound.currentTime = 0;
-    explode_sound.play();
+    var promise = explode_sound.play();
+
+    if (promise !== undefined) {
+        promise.then(_ => {
+            // Autoplay started!
+        }).catch(error => {
+            // Autoplay was prevented.
+            // Show a "Play" button so that user can start playback.
+        });
+    }
+
     return false;
 }
 

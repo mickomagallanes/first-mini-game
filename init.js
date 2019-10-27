@@ -49,6 +49,10 @@ window.onkeydown = function (e) {
                 // spacebar
                 ball_interval = setInterval(function () {
                     shoot(globalX, globalY);
+                    // shoot(globalX - 20, globalY);
+                    // shoot(globalX + 20, globalY);
+                    // shoot(globalX - 30, globalY, 5);
+                    // shoot(globalX + 30, globalY, -5);
                 }, 180);
             }
             isFired = true;
