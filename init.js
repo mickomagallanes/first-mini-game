@@ -1,3 +1,11 @@
+window.onkeydown = function (e) {
+    if (event.keyCode == 13) {
+        this.document.getElementById("welcome").style.display = "none";
+        this.init();
+    }
+}
+
+
 function ScreenTimer() {
     // clear drawings
     ctx.drawImage(space_image, 0, 0, canvas.width, canvas.height);
@@ -33,10 +41,10 @@ function ScreenTimer() {
     requestId = requestAnimationFrame(ScreenTimer);
 }
 
-
-ctx.drawImage(space_image, 0, 0, canvas.width, canvas.height);
-
 function init() {
+
+    ctx.drawImage(space_image, 0, 0, canvas.width, canvas.height);
+
     spawnEnemies();
 
     ScreenTimer();
@@ -45,9 +53,6 @@ function init() {
     array_ship.push(ship_object);
 
 
-    // pattern1();
-    // pattern_alien2();
-    // pattern_surprise1();
     window.onkeydown = function (e) {
         if (array_ship[0]) {
             if (!isFired) {
@@ -78,13 +83,6 @@ function init() {
             clearInterval(ball_interval);
         }
     };
-}
-
-window.onkeydown = function (e) {
-    if (event.keyCode == 13) {
-        this.document.getElementById("welcome").style.display = "none";
-        this.init();
-    }
 }
 
 function spawnEnemies() {
