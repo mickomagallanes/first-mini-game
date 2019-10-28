@@ -133,7 +133,7 @@ function resetGame() {
 
     launchNextWave = true;
 
-    spawner_counte = 0;
+    spawner_counter = 0;
 
     isGameOver = false;
     ship_x = canvas.width / 2;
