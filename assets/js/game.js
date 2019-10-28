@@ -36,7 +36,7 @@ function checkMove() {
     }
 }
 
-function intersects(circle, rect) {
+function circle2rect_intersects(circle, rect) {
     var distX = Math.abs(circle.x - rect.x - rect.width / 2);
     var distY = Math.abs(circle.y - rect.y - rect.height / 2);
 
@@ -59,28 +59,6 @@ function intersects(circle, rect) {
     return dx * dx + dy * dy <= circle.radius * circle.radius;
 }
 
-function intersects_alien(circle, rect) {
-    var distX = Math.abs(circle.x - rect.hitbox_x - rect.hitbox_width / 2);
-    var distY = Math.abs(circle.y - rect.hitbox_y - rect.hitbox_height / 2);
-
-    if (distX > rect.hitbox_width / 2 + circle.radius) {
-        return false;
-    }
-    if (distY > rect.hitbox_height / 2 + circle.radius) {
-        return false;
-    }
-
-    if (distX <= rect.hitbox_width / 2) {
-        return true;
-    }
-    if (distY <= rect.hitbox_height / 2) {
-        return true;
-    }
-
-    var dx = distX - rect.hitbox_width / 2;
-    var dy = distY - rect.hitbox_height / 2;
-    return dx * dx + dy * dy <= circle.radius * circle.radius;
-}
 
 function rect2rect_intersects(rect1, rect2) {
 
@@ -321,4 +299,8 @@ function checkIfEntityIsOutside(obj) {
     } else {
         return false;
     }
+}
+
+function addScore() {
+    scoreboard += 100;
 }

@@ -3,7 +3,7 @@ class bullet {
         this.x = x;
         this.y = y;
         this.dx = angle;
-        this.dy = -14;
+        this.dy = -18;
         this.isDead = 0;
 
         this.hitbox_width = bullet_size - 20;

@@ -1,14 +1,20 @@
 window.onkeydown = function (e) {
     if (event.keyCode == 13) {
         this.document.getElementById("welcome").style.display = "none";
-        this.init();
+        this.startGame();
     }
 }
+
+this.document.getElementById("scoreboard").style.display = "none";
+this.document.getElementById("labelScore").style.display = "none";
+ctx.drawImage(space_image, 0, 0, canvas.width, canvas.height);
 
 
 function ScreenTimer() {
     // clear drawings
     ctx.drawImage(space_image, 0, 0, canvas.width, canvas.height);
+
+    this.document.getElementById("scoreboard").innerHTML = scoreboard;
 
     checkSpawner();
 
@@ -41,9 +47,7 @@ function ScreenTimer() {
     requestId = requestAnimationFrame(ScreenTimer);
 }
 
-function init() {
-
-    ctx.drawImage(space_image, 0, 0, canvas.width, canvas.height);
+function startGame() {
 
     spawnEnemies();
 
@@ -51,6 +55,11 @@ function init() {
 
     var ship_object = new ship();
     array_ship.push(ship_object);
+
+    this.document.getElementById("scoreboard").style.display = "block";
+    this.document.getElementById("labelScore").style.display = "block";
+
+    this.document.getElementById("scoreboard").innerHTML = scoreboard;
 
 
     window.onkeydown = function (e) {
@@ -164,6 +173,7 @@ function resetGame() {
         array_hitbox
     ]; // for looping purpose
 
+    scoreboard = 0;
 
     timeout_array = [];
 
@@ -173,7 +183,7 @@ function resetGame() {
     window.onkeydown = function (e) {
         if (event.keyCode == 13) {
             this.document.getElementById("welcome").style.display = "none";
-            this.init();
+            this.startGame();
         }
     }
 

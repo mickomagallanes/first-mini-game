@@ -9,8 +9,11 @@ canvas {
   margin: 2em auto 0;
 }
 
+
 #wrapper {
   position: relative;
+  width: 490px;
+  margin: auto;
 }
 
 #welcome {
@@ -25,6 +28,26 @@ canvas {
 }
 
 #instruction {
+  position: relative;
+  text-align: center;
+  margin: auto;
+}
+
+#scoreboard {
+  z-index: 10000;
   position: absolute;
-  left: 45%;
+  top: 5%;
+  right: 3%;
+  color: azure;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+#labelScore {
+  z-index: 10000;
+  position: absolute;
+  top: 5%;
+  right: 23%;
+  color: azure;
 }

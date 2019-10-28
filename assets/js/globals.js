@@ -30,6 +30,8 @@ var spawner_timeout_array = [];
 
 var alien_quantity = 125;
 
+var scoreboard = 0;
+
 var globalX = ship_x; // location of ship when it moves
 var globalY = ship_y; // location of ship when it moves
 

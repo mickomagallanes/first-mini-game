@@ -25,6 +25,7 @@ class alien {
 
             if (rect2rect_intersects(array_bullet[i], this)) {
                 if (!this.life_func(array_bullet[i])) {
+                    addScore();
                     // set alien and bullet dead
                     this.isDead = 1;
                     array_bullet[i].isDead = 1;
