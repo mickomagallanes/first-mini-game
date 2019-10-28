@@ -109,10 +109,16 @@ function checkSpawner() {
 
     if (launchNextWave && spawner_counter < spawner_array.length) {
 
-        setTimeout(function () {
+        var timeout = undefined;
+
+        timeout = setTimeout(function () {
             spawner_array[spawner_counter]();
             spawner_counter++;
-        }, 4000);
+        }, 6000);
+
+        if (timeout) {
+            spawner_timeout_array.push(timeout);
+        }
 
         launchNextWave = false;
 
@@ -130,6 +136,13 @@ function resetGame() {
         clearTimeout(timeout_array[i]);
         //timeout_array.splice(i, 1);
     }
+
+    for (var i = 0; i < spawner_timeout_array.length; i++) {
+        clearTimeout(spawner_timeout_array[i]);
+        //timeout_array.splice(i, 1);
+    }
+
+    spawner_timeout_array = [];
 
     launchNextWave = true;
 
@@ -152,7 +165,11 @@ function resetGame() {
         array_ship,
         array_hitbox
     ]; // for looping purpose
+
+
     timeout_array = [];
+
+    spawner_array = [];
     ctx.drawImage(space_image, 0, 0, canvas.width, canvas.height);
 
     window.onkeydown = function (e) {

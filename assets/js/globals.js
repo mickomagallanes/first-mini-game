@@ -26,6 +26,8 @@ var launchNextWave = true
 
 var spawner_counter = 0;
 
+var spawner_timeout_array = [];
+
 var alien_quantity = 125;
 
 var globalX = ship_x; // location of ship when it moves
