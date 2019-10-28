@@ -174,11 +174,15 @@ function pattern1() {
             }
 
         }, i * 500);
+
+        if (timeout) {
+            timeout_array.push(timeout);
+        }
+
     }
 
-    if (timeout) {
-        timeout_array.push(timeout);
-    }
+
+
 
 }
 
@@ -230,11 +234,13 @@ function pattern_surprise1() {
             }
 
         }, i * 500);
+
+        if (timeout) {
+            timeout_array.push(timeout);
+        }
     }
 
-    if (timeout) {
-        timeout_array.push(timeout);
-    }
+
 
 }
 
