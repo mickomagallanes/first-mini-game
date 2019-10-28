@@ -161,13 +161,18 @@ function pattern1() {
         }
     };
 
-    for (let i = 1; i < 75; i++) {
+    for (let i = 1; i <= alien_quantity; i++) {
 
         let spaces = roll_whole(150, 350);
 
         timeout = setTimeout(function () {
             var alien_object = new alien(spaces, alien_image, movementFunc);
             array_alien.push(alien_object);
+
+            if (i == alien_quantity) {
+                launchNextWave = true;
+            }
+
         }, i * 500);
     }
 
@@ -212,13 +217,18 @@ function pattern_surprise1() {
         }
     };
 
-    for (let i = 1; i < 75; i++) {
+    for (let i = 1; i <= alien_quantity; i++) {
 
         let spaces = roll_whole(150, 350);
 
         timeout = setTimeout(function () {
             var alien_object = new alien(spaces, alien_image, movementFunc);
             array_alien.push(alien_object);
+
+            if (i == alien_quantity) {
+                launchNextWave = true;
+            }
+
         }, i * 500);
     }
 
@@ -274,18 +284,25 @@ function pattern_alien2() {
 
     var timeout = undefined;
 
-    for (let i = 1; i < 75; i++) {
+    for (let i = 1; i <= alien_quantity; i++) {
 
         let spaces = roll_whole(150, 350);
 
         timeout = setTimeout(function () {
             var alien_object = new alien(spaces, alien_image2, movementFunc, lifeFunc);
             array_alien.push(alien_object);
+
+            if (i == alien_quantity) {
+                launchNextWave = true;
+            }
+
         }, i * 700);
 
         if (timeout) {
             timeout_array.push(timeout);
         }
+
+
     }
 
 

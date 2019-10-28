@@ -2,6 +2,8 @@ function ScreenTimer() {
     // clear drawings
     ctx.drawImage(space_image, 0, 0, canvas.width, canvas.height);
 
+    checkSpawner();
+
     for (var i = 0; i < all_array.length; i++) {
         var current_array = all_array[i];
 
@@ -35,17 +37,13 @@ function ScreenTimer() {
 ctx.drawImage(space_image, 0, 0, canvas.width, canvas.height);
 
 function init() {
+    spawnEnemies();
+
     ScreenTimer();
 
     var ship_object = new ship();
     array_ship.push(ship_object);
 
-
-    setTimeout(function () {
-        //pattern1();
-        //pattern_surprise1();
-        pattern_alien2();
-    }, 4000);
 
     // pattern1();
     // pattern_alien2();
@@ -87,6 +85,30 @@ window.onkeydown = function (e) {
         this.document.getElementById("welcome").style.display = "none";
         this.init();
     }
+}
+
+function spawnEnemies() {
+    spawner_array.push(pattern1);
+    spawner_array.push(pattern_surprise1);
+    spawner_array.push(pattern_alien2);
+
+
+
+}
+
+function checkSpawner() {
+
+    if (launchNextWave && spawner_counter < spawner_array.length) {
+
+        setTimeout(function () {
+            spawner_array[spawner_counter]();
+            spawner_counter++;
+        }, 4000);
+
+        launchNextWave = false;
+
+    }
+
 }
 
 function resetGame() {

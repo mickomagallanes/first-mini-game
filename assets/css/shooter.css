@@ -23,3 +23,8 @@ canvas {
   color: azure;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+
+#instruction {
+  position: absolute;
+  left: 45%;
+}
