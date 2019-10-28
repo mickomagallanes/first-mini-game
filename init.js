@@ -91,6 +91,15 @@ function spawnEnemies() {
     spawner_array.push(pattern1);
     spawner_array.push(pattern_surprise1);
     spawner_array.push(pattern_alien2);
+    spawner_array.push(pattern1);
+    spawner_array.push(pattern_surprise1);
+    spawner_array.push(pattern_alien2);
+    spawner_array.push(pattern1);
+    spawner_array.push(pattern_surprise1);
+    spawner_array.push(pattern_alien2);
+    spawner_array.push(pattern1);
+    spawner_array.push(pattern_surprise1);
+    spawner_array.push(pattern_alien2);
 
 
 
