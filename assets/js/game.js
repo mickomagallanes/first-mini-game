@@ -116,6 +116,15 @@ function pattern1() {
         }
         this.isChecked = true;
 
+        if (this.x <= -5) {
+            this.x += 5;
+            this.roll_dice = invertDice(this.roll_dice);
+        } else if (this.x >= 485) {
+            this.x -= 5;
+            this.roll_dice = invertDice(this.roll_dice);
+        }
+
+
         if (this.y + 80 >= canvas.height / 2) {
 
             if (this.roll_dice) {
@@ -141,7 +150,7 @@ function pattern1() {
 
     for (let i = 1; i <= alien_quantity; i++) {
 
-        let spaces = roll_whole(150, 350);
+        let spaces = roll_whole(20, 460);
 
         timeout = setTimeout(function () {
             var alien_object = new alien(spaces, alien_image, movementFunc);
@@ -169,12 +178,21 @@ function pattern_surprise1() {
     var movementFunc = function () {
         if (!this.isChecked) {
             this.roll_dice = roll_2_sides();
-            this.roll_dec = roll_decimal(1, 60);
+            this.roll_dec = roll_decimal(1, 30);
             this.roll_whole = roll_whole(2, 5);
 
         }
 
         this.isChecked = true;
+
+        if (this.x <= -5) {
+            this.x += 5;
+            this.roll_dice = invertDice(this.roll_dice);
+        } else if (this.x >= 485) {
+            this.x -= 5;
+            this.roll_dice = invertDice(this.roll_dice);
+        }
+
 
         if (this.y + 50 >= canvas.height / 2) {
 
@@ -201,7 +219,7 @@ function pattern_surprise1() {
 
     for (let i = 1; i <= alien_quantity; i++) {
 
-        let spaces = roll_whole(150, 350);
+        let spaces = roll_whole(20, 460);
 
         timeout = setTimeout(function () {
             var alien_object = new alien(spaces, alien_image, movementFunc);
@@ -232,6 +250,14 @@ function pattern_alien2() {
             this.lives = 1;
         }
         this.isChecked = true;
+
+        if (this.x <= -5) {
+            this.x += 5;
+            this.roll_dice = invertDice(this.roll_dice);
+        } else if (this.x >= 485) {
+            this.x -= 5;
+            this.roll_dice = invertDice(this.roll_dice);
+        }
 
         if (this.y + 80 >= canvas.height / 2) {
 
@@ -270,7 +296,7 @@ function pattern_alien2() {
 
     for (let i = 1; i <= alien_quantity; i++) {
 
-        let spaces = roll_whole(150, 350);
+        let spaces = roll_whole(20, 460);
 
         timeout = setTimeout(function () {
             var alien_object = new alien(spaces, alien_image2, movementFunc, lifeFunc);
@@ -303,4 +329,12 @@ function checkIfEntityIsOutside(obj) {
 
 function addScore() {
     scoreboard += 100;
+}
+
+function invertDice(die) {
+    if (die) {
+        return 0;
+    } else {
+        return 1;
+    }
 }
