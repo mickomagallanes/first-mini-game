@@ -32,16 +32,16 @@ function ScreenTimer() {
                 p--;
             }
 
-            if (isGameOver) {
-                setTimeout(function () {
-                    resetGame();
-                    cancelAnimationFrame(requestId);
-                    return;
-                }, 2000);
-                isGameOver = false;
-            }
-
         }
+    }
+
+    if (isGameOver) {
+        setTimeout(function () {
+            resetGame();
+            cancelAnimationFrame(requestId);
+            return;
+        }, 2000);
+        isGameOver = false;
     }
 
     requestId = requestAnimationFrame(ScreenTimer);
@@ -69,12 +69,30 @@ function startGame() {
                     // spacebar
                     ball_interval = setInterval(function () {
                         shoot(globalX, globalY);
-                        //shoot(globalX - 10, globalY);
-                        //shoot(globalX + 10, globalY);
+                        // shoot(globalX - 10, globalY);
+                        // shoot(globalX + 10, globalY);
                         // shoot(globalX - 20, globalY);
                         // shoot(globalX + 20, globalY);
-                        // shoot(globalX - 30, globalY, 5);
-                        // shoot(globalX + 30, globalY, -5);
+                        // //shoot(globalX - 30, globalY, 5);
+                        // //shoot(globalX + 30, globalY, -5);
+                        // shoot(globalX - 40, globalY);
+                        // shoot(globalX + 40, globalY);
+                        // shoot(globalX - 60, globalY);
+                        // shoot(globalX + 60, globalY);
+                        // shoot(globalX - 80, globalY);
+                        // shoot(globalX + 80, globalY);
+                        // shoot(globalX - 100, globalY);
+                        // shoot(globalX + 100, globalY);
+                        // shoot(globalX - 120, globalY);
+                        // shoot(globalX + 120, globalY);
+                        // shoot(globalX - 140, globalY);
+                        // shoot(globalX + 140, globalY);
+                        // shoot(globalX - 160, globalY);
+                        // shoot(globalX + 160, globalY);
+                        // shoot(globalX - 180, globalY);
+                        // shoot(globalX + 180, globalY);
+                        // shoot(globalX - 200, globalY);
+                        // shoot(globalX + 200, globalY);
                     }, 180);
                 }
                 isFired = true;

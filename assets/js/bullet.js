@@ -13,7 +13,7 @@ class bullet {
     }
 
     Trigger() {
-        if (this.y > 0 && !this.isDead) {
+        if (this.y + this.dy >= 0 && !this.isDead) {
             this.y += this.dy;
 
             if (this.dx != undefined) {

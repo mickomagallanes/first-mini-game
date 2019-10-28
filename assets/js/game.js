@@ -116,10 +116,11 @@ function pattern1() {
         }
         this.isChecked = true;
 
+        // bounce off to walls
         if (this.x <= -5) {
             this.x += 5;
             this.roll_dice = invertDice(this.roll_dice);
-        } else if (this.x >= 485) {
+        } else if (this.x >= canvas.width + 5) {
             this.x -= 5;
             this.roll_dice = invertDice(this.roll_dice);
         }
@@ -185,10 +186,11 @@ function pattern_surprise1() {
 
         this.isChecked = true;
 
+        // bounce off to walls
         if (this.x <= -5) {
             this.x += 5;
             this.roll_dice = invertDice(this.roll_dice);
-        } else if (this.x >= 485) {
+        } else if (this.x >= canvas.width + 5) {
             this.x -= 5;
             this.roll_dice = invertDice(this.roll_dice);
         }
@@ -251,10 +253,11 @@ function pattern_alien2() {
         }
         this.isChecked = true;
 
+        // bounce off to walls
         if (this.x <= -5) {
             this.x += 5;
             this.roll_dice = invertDice(this.roll_dice);
-        } else if (this.x >= 485) {
+        } else if (this.x >= canvas.width + 5) {
             this.x -= 5;
             this.roll_dice = invertDice(this.roll_dice);
         }
