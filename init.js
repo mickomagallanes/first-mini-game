@@ -131,7 +131,9 @@ function resetGame() {
         //timeout_array.splice(i, 1);
     }
 
+    launchNextWave = true;
 
+    spawner_counte = 0;
 
     isGameOver = false;
     ship_x = canvas.width / 2;
