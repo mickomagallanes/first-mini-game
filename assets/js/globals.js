@@ -1,71 +1,90 @@
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-var ship_x = canvas.width / 2;
-var ship_y = canvas.height - 50;
-var ship_size = 80;
-var ship_radius = ship_size / 2;
+var CANVAS = document.getElementById("myCanvas");
+var CTX = CANVAS.getContext("2d");
+var SHIP_X = CANVAS.width / 2;
+var SHIP_Y = CANVAS.height - 50;
+var SHIP_SIZE = 80;
+var SHIP_RADIUS = SHIP_SIZE / 2;
 
-var alien_size = 55;
+var ALIEN_SIZE = 55;
 
-var alien_image = new Image();
-alien_image.src = "assets/img/alien.png";
+var ALIEN_IMAGE = new Image();
+ALIEN_IMAGE.src = "assets/img/alien.png";
 
-var alien_image2 = new Image();
-alien_image2.src = "assets/img/alien2.png";
+var ALIEN_IMAGE2 = new Image();
+ALIEN_IMAGE2.src = "assets/img/alien2.png";
 
-var bullet_image = new Image();
-bullet_image.src = "assets/img/bullet.png";
+var BULLET_IMAGE = new Image();
+BULLET_IMAGE.src = "assets/img/bullet.png";
 
-var bullet_size = 30;
+var BONUS_IMAGE_2X = new Image();
+BONUS_IMAGE_2X.src = "assets/img/2x-coin.png";
 
-var isGameOver = false;
+var BONUS_SIZE = 48;
 
-var requestId = undefined;
+var BULLET_SIZE = 30;
 
-var launchNextWave = true
+var IS_GAME_OVER = false;
 
-var spawner_counter = 0;
+var REQUEST_ID = undefined;
 
-var spawner_timeout_array = [];
+var LAUNCH_NEXT_WAVE = true
 
-var alien_quantity = 125;
+var SPAWNER_COUNTER = 0;
 
-var scoreboard = 0;
+var ROUND_COUNTER = 0;
 
-var globalX = ship_x; // location of ship when it moves
-var globalY = ship_y; // location of ship when it moves
+var SPAWNER_TIMEOUT_ARRAY = [];
 
-var array_bullet = [];
-var array_alien = [];
-var array_explode = [];
-var array_ship = [];
-var array_hitbox = [];
-var all_array = [
-    array_bullet,
-    array_explode,
-    array_alien,
-    array_ship,
-    array_hitbox
+var ALIEN_QUANTITY = 125;
+
+var SCOREBOARD = 0;
+
+var GLOBAL_X = SHIP_X; // location of ship when it moves
+var GLOBAL_Y = SHIP_Y; // location of ship when it moves
+
+var ARRAY_BULLET = [];
+var ARRAY_ALIEN = [];
+var ARRAY_EXPLODE = [];
+var ARRAY_SHIP = [];
+var ARRAY_HITBOX = [];
+var ARRAY_BONUS = [];
+var ARRAY_BONUS_EXPLODE = [];
+var ALL_ARRAY = [
+    ARRAY_BULLET,
+    ARRAY_EXPLODE,
+    ARRAY_ALIEN,
+    ARRAY_SHIP,
+    ARRAY_HITBOX,
+    ARRAY_BONUS,
+    ARRAY_BONUS_EXPLODE
 ]; // for looping purpose
 
-var timeout_array = [];
+var TIMEOUT_ARRAY = [];
 
-var spawner_array = [];
+var SPAWNER_ARRAY = [];
 
-var ball_interval; // setInterval of shoot when mouse pressed
+var BALL_INTERVAL; // setInterval of shoot when mouse pressed
 
-var isFired = false; // prevents spacebar shoot from being stucked
+var IS_FIRED = false; // prevents spacebar shoot from being stucked
 
-var ship_image = new Image();
-ship_image.src = "assets/img/ship.png";
+var CURRENT_BALL_FUNCTION = function () {
+    shoot(GLOBAL_X, GLOBAL_Y);
+}
+
+var SHIP_IMAGE = new Image();
+SHIP_IMAGE.src = "assets/img/ship.png";
 
 
 
-var explosion_image = new Image();
-explosion_image.src = "assets/img/explode.png";
+var EXPLOSION_IMAGE = new Image();
+EXPLOSION_IMAGE.src = "assets/img/explode.png";
 
-var explode_sound = new Audio("assets/mp3/explode.mp3");
-var gun_sound = new Audio("assets/mp3/gun.mp3");
+var EXPLODE_SOUND = new Audio("assets/mp3/explode.mp3");
+var GUN_SOUND = new Audio("assets/mp3/gun.mp3");
+var BONUS_SOUND = new Audio("assets/mp3/bonus.mp3");
 
-var space_image = new Image();
-space_image.src = "assets/img/space.jpg";
+var SPACE_IMAGE = new Image();
+SPACE_IMAGE.src = "assets/img/space.jpg";
+
+var BONUS_EFFECT_IMAGE = new Image();
+BONUS_EFFECT_IMAGE.src = "assets/img/bonus-effect.png";

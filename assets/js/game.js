@@ -1,11 +1,11 @@
 function shoot(x, y, angle) {
     var bullet_object = new bullet(x, y, angle);
-    array_bullet.push(bullet_object);
+    ARRAY_BULLET.push(bullet_object);
 
     // play gun sound
-    gun_sound.pause();
-    gun_sound.currentTime = 0;
-    var promise = gun_sound.play();
+    GUN_SOUND.pause();
+    GUN_SOUND.currentTime = 0;
+    var promise = GUN_SOUND.play();
 
     if (promise !== undefined) {
         promise.then(_ => {
@@ -19,20 +19,20 @@ function shoot(x, y, angle) {
 
 function checkMove() {
     // left
-    if (event.keyCode == 37 && !(globalX <= 0)) {
-        globalX -= 10;
+    if (event.keyCode == 37 && !(GLOBAL_X <= 0)) {
+        GLOBAL_X -= 10;
     }
     // up
-    else if (event.keyCode == 38 && !(globalY <= 0 + ship_radius)) {
-        globalY -= 10;
+    else if (event.keyCode == 38 && !(GLOBAL_Y <= 0 + SHIP_RADIUS)) {
+        GLOBAL_Y -= 10;
     }
     // right
-    else if (event.keyCode == 39 && !(globalX >= canvas.width)) {
-        globalX += 10;
+    else if (event.keyCode == 39 && !(GLOBAL_X >= CANVAS.width)) {
+        GLOBAL_X += 10;
     }
     // down
-    else if (event.keyCode == 40 && !(globalY >= canvas.height - ship_radius)) {
-        globalY += 10;
+    else if (event.keyCode == 40 && !(GLOBAL_Y >= CANVAS.height - SHIP_RADIUS)) {
+        GLOBAL_Y += 10;
     }
 }
 
@@ -73,13 +73,34 @@ function rect2rect_intersects(rect1, rect2) {
 
 
 function triggerExplode(entity) {
-    var explode_object = new explode(entity.x, entity.y);
-    array_explode.push(explode_object);
+    var explode_object = new explode(entity);
+    ARRAY_EXPLODE.push(explode_object);
 
     // play explode sound
-    explode_sound.pause();
-    explode_sound.currentTime = 0;
-    var promise = explode_sound.play();
+    EXPLODE_SOUND.pause();
+    EXPLODE_SOUND.currentTime = 0;
+    var promise = EXPLODE_SOUND.play();
+
+    if (promise !== undefined) {
+        promise.then(_ => {
+            // Autoplay started!
+        }).catch(error => {
+            // Autoplay was prevented.
+            // Show a "Play" button so that user can start playback.
+        });
+    }
+
+    return false;
+}
+
+function triggerBonusEffect(entity) {
+    var explode_object = new bonus_explode();
+    ARRAY_BONUS_EXPLODE.push(explode_object);
+
+    // play explode sound
+    BONUS_SOUND.pause();
+    BONUS_SOUND.currentTime = 0;
+    var promise = BONUS_SOUND.play();
 
     if (promise !== undefined) {
         promise.then(_ => {
@@ -105,6 +126,10 @@ function roll_whole(min, max) {
     return (Math.floor(Math.random() * (max - min + 1)) + min)
 }
 
+function roll_thousands(min, max) {
+    return (Math.floor(Math.random() * (max - min + 1)) + min) * 1000
+}
+
 function pattern1() {
 
     var movementFunc = function () {
@@ -120,13 +145,13 @@ function pattern1() {
         if (this.x <= -5) {
             this.x += 5;
             this.roll_dice = invertDice(this.roll_dice);
-        } else if (this.x >= canvas.width + 5) {
+        } else if (this.x >= CANVAS.width + 5) {
             this.x -= 5;
             this.roll_dice = invertDice(this.roll_dice);
         }
 
 
-        if (this.y + 80 >= canvas.height / 2) {
+        if (this.y + 80 >= CANVAS.height / 2) {
 
             if (this.roll_dice) {
                 this.x += this.roll_dec;
@@ -149,23 +174,23 @@ function pattern1() {
         }
     };
 
-    for (let i = 1; i <= alien_quantity; i++) {
+    var timeout = undefined;
+
+    for (let i = 1; i <= ALIEN_QUANTITY; i++) {
 
         let spaces = roll_whole(20, 460);
 
-        timeout = setTimeout(function () {
-            var alien_object = new alien(spaces, alien_image, movementFunc);
-            array_alien.push(alien_object);
+        let timeout_func = function () {
+            var alien_object = new alien(spaces, ALIEN_IMAGE, movementFunc);
+            ARRAY_ALIEN.push(alien_object);
 
-            if (i == alien_quantity) {
-                launchNextWave = true;
+            if (i == ALIEN_QUANTITY) {
+                LAUNCH_NEXT_WAVE = true;
             }
+        };
 
-        }, i * 500);
+        setTimeoutAndSave(timeout_func, i * 500);
 
-        if (timeout) {
-            timeout_array.push(timeout);
-        }
 
     }
 
@@ -190,13 +215,13 @@ function pattern_surprise1() {
         if (this.x <= -5) {
             this.x += 5;
             this.roll_dice = invertDice(this.roll_dice);
-        } else if (this.x >= canvas.width + 5) {
+        } else if (this.x >= CANVAS.width + 5) {
             this.x -= 5;
             this.roll_dice = invertDice(this.roll_dice);
         }
 
 
-        if (this.y + 50 >= canvas.height / 2) {
+        if (this.y + 50 >= CANVAS.height / 2) {
 
             if (this.roll_dice) {
                 this.x += this.roll_dec;
@@ -219,23 +244,24 @@ function pattern_surprise1() {
         }
     };
 
-    for (let i = 1; i <= alien_quantity; i++) {
+    var timeout = undefined;
+
+    for (let i = 1; i <= ALIEN_QUANTITY; i++) {
 
         let spaces = roll_whole(20, 460);
 
-        timeout = setTimeout(function () {
-            var alien_object = new alien(spaces, alien_image, movementFunc);
-            array_alien.push(alien_object);
+        let timeout_func = function () {
+            var alien_object = new alien(spaces, ALIEN_IMAGE, movementFunc);
+            ARRAY_ALIEN.push(alien_object);
 
-            if (i == alien_quantity) {
-                launchNextWave = true;
+            if (i == ALIEN_QUANTITY) {
+                LAUNCH_NEXT_WAVE = true;
             }
 
-        }, i * 500);
+        };
 
-        if (timeout) {
-            timeout_array.push(timeout);
-        }
+        setTimeoutAndSave(timeout_func, i * 500);
+
     }
 
 
@@ -257,12 +283,12 @@ function pattern_alien2() {
         if (this.x <= -5) {
             this.x += 5;
             this.roll_dice = invertDice(this.roll_dice);
-        } else if (this.x >= canvas.width + 5) {
+        } else if (this.x >= CANVAS.width + 5) {
             this.x -= 5;
             this.roll_dice = invertDice(this.roll_dice);
         }
 
-        if (this.y + 80 >= canvas.height / 2) {
+        if (this.y + 80 >= CANVAS.height / 2) {
 
             if (this.roll_dice) {
                 this.x += this.roll_dec;
@@ -297,23 +323,21 @@ function pattern_alien2() {
 
     var timeout = undefined;
 
-    for (let i = 1; i <= alien_quantity; i++) {
+    for (let i = 1; i <= ALIEN_QUANTITY; i++) {
 
         let spaces = roll_whole(20, 460);
 
-        timeout = setTimeout(function () {
-            var alien_object = new alien(spaces, alien_image2, movementFunc, lifeFunc);
-            array_alien.push(alien_object);
+        let timeout_func = function () {
+            var alien_object = new alien(spaces, ALIEN_IMAGE2, movementFunc, lifeFunc);
+            ARRAY_ALIEN.push(alien_object);
 
-            if (i == alien_quantity) {
-                launchNextWave = true;
+            if (i == ALIEN_QUANTITY) {
+                LAUNCH_NEXT_WAVE = true;
             }
 
-        }, i * 700);
+        };
 
-        if (timeout) {
-            timeout_array.push(timeout);
-        }
+        setTimeoutAndSave(timeout_func, i * 700);
 
 
     }
@@ -322,8 +346,38 @@ function pattern_alien2() {
 
 }
 
+function spawn_bonus_2x() {
+
+    let spaces = roll_whole(20, 460);
+
+    var bonus_object = new bonus(spaces, BONUS_IMAGE_2X, setDoubleBullet);
+    ARRAY_BONUS.push(bonus_object);
+
+
+}
+
+function setDoubleBullet() {
+    CURRENT_BALL_FUNCTION = function () {
+        shoot(GLOBAL_X - 20, GLOBAL_Y);
+        shoot(GLOBAL_X + 20, GLOBAL_Y);
+    }
+
+    let timeout_func = function () {
+        setDefaultBullet();
+    };
+
+    setTimeoutAndSave(timeout_func, 20000);
+}
+
+function setDefaultBullet() {
+    CURRENT_BALL_FUNCTION = function () {
+        shoot(GLOBAL_X, GLOBAL_Y);
+    }
+
+}
+
 function checkIfEntityIsOutside(obj) {
-    if (obj.x < -100 || obj.x > canvas.width + 100 || obj.y > canvas.height + 100 || obj.y < -100) {
+    if (obj.x < -100 || obj.x > CANVAS.width + 100 || obj.y > CANVAS.height + 100 || obj.y < -100) {
         return true
     } else {
         return false;
@@ -331,7 +385,7 @@ function checkIfEntityIsOutside(obj) {
 }
 
 function addScore() {
-    scoreboard += 100;
+    SCOREBOARD += 100;
 }
 
 function invertDice(die) {
@@ -339,5 +393,13 @@ function invertDice(die) {
         return 0;
     } else {
         return 1;
+    }
+}
+
+function setTimeoutAndSave(func, secs) {
+    var timeout = setTimeout(func, secs);
+
+    if (timeout) {
+        SPAWNER_TIMEOUT_ARRAY.push(timeout);
     }
 }

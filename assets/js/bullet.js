@@ -6,8 +6,8 @@ class bullet {
         this.dy = -18;
         this.isDead = 0;
 
-        this.hitbox_width = bullet_size - 20;
-        this.hitbox_height = bullet_size - 10;
+        this.hitbox_width = BULLET_SIZE - 20;
+        this.hitbox_height = BULLET_SIZE - 10;
         this.hitbox_x = this.x - (this.hitbox_width / 2);
         this.hitbox_y = this.y - (this.hitbox_height / 2);
     }
@@ -33,13 +33,13 @@ class bullet {
     }
 
     drawHitbox() {
-        ctx.beginPath();
-        ctx.rect(this.hitbox_x, this.hitbox_y, this.hitbox_width, this.hitbox_height);
-        ctx.fillStyle = "red";
-        ctx.fill();
+        CTX.beginPath();
+        CTX.rect(this.hitbox_x, this.hitbox_y, this.hitbox_width, this.hitbox_height);
+        CTX.fillStyle = "red";
+        CTX.fill();
     }
 
     drawBullet() {
-        ctx.drawImage(bullet_image, this.x - (bullet_size / 2), this.y - (bullet_size / 2), bullet_size, bullet_size);
+        CTX.drawImage(BULLET_IMAGE, this.x - (BULLET_SIZE / 2), this.y - (BULLET_SIZE / 2), BULLET_SIZE, BULLET_SIZE);
     }
 }

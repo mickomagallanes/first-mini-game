@@ -7,19 +7,19 @@ window.onkeydown = function (e) {
 
 this.document.getElementById("scoreboard").style.display = "none";
 this.document.getElementById("labelScore").style.display = "none";
-ctx.drawImage(space_image, 0, 0, canvas.width, canvas.height);
+CTX.drawImage(SPACE_IMAGE, 0, 0, CANVAS.width, CANVAS.height);
 
 
 function ScreenTimer() {
     // clear drawings
-    ctx.drawImage(space_image, 0, 0, canvas.width, canvas.height);
+    CTX.drawImage(SPACE_IMAGE, 0, 0, CANVAS.width, CANVAS.height);
 
-    this.document.getElementById("scoreboard").innerHTML = scoreboard;
+    this.document.getElementById("scoreboard").innerHTML = SCOREBOARD;
 
     checkSpawner();
 
-    for (var i = 0; i < all_array.length; i++) {
-        var current_array = all_array[i];
+    for (var i = 0; i < ALL_ARRAY.length; i++) {
+        var current_array = ALL_ARRAY[i];
 
         for (var p = 0; p < current_array.length; p++) {
             if ("checkIfDead" in current_array[p]) {
@@ -35,67 +35,78 @@ function ScreenTimer() {
         }
     }
 
-    if (isGameOver) {
+    if (IS_GAME_OVER) {
         setTimeout(function () {
             resetGame();
-            cancelAnimationFrame(requestId);
+            cancelAnimationFrame(REQUEST_ID);
             return;
         }, 2000);
-        isGameOver = false;
+        IS_GAME_OVER = false;
     }
 
-    requestId = requestAnimationFrame(ScreenTimer);
+    REQUEST_ID = requestAnimationFrame(ScreenTimer);
 }
 
 function startGame() {
+
+
+    var ship_object = new ship();
+    ARRAY_SHIP.push(ship_object);
+
+    // TODO: roll on every 3 rounds, then roll on seconds and spawn bonus
+    // TODO: show timer of bonus
+    let timeout_func = function () {
+        spawn_bonus_2x();
+    }
+
+    setTimeoutAndSave(timeout_func, roll_thousands(12, 20));
 
     spawnEnemies();
 
     ScreenTimer();
 
-    var ship_object = new ship();
-    array_ship.push(ship_object);
 
     this.document.getElementById("scoreboard").style.display = "block";
     this.document.getElementById("labelScore").style.display = "block";
 
-    this.document.getElementById("scoreboard").innerHTML = scoreboard;
+    this.document.getElementById("scoreboard").innerHTML = SCOREBOARD;
 
 
     window.onkeydown = function (e) {
-        if (array_ship[0]) {
-            if (!isFired) {
+        if (ARRAY_SHIP[0]) {
+            if (!IS_FIRED) {
                 if (event.keyCode == 32) {
                     // spacebar
-                    ball_interval = setInterval(function () {
-                        shoot(globalX, globalY);
-                        // shoot(globalX - 10, globalY);
-                        // shoot(globalX + 10, globalY);
-                        // shoot(globalX - 20, globalY);
-                        // shoot(globalX + 20, globalY);
-                        // //shoot(globalX - 30, globalY, 5);
-                        // //shoot(globalX + 30, globalY, -5);
-                        // shoot(globalX - 40, globalY);
-                        // shoot(globalX + 40, globalY);
-                        // shoot(globalX - 60, globalY);
-                        // shoot(globalX + 60, globalY);
-                        // shoot(globalX - 80, globalY);
-                        // shoot(globalX + 80, globalY);
-                        // shoot(globalX - 100, globalY);
-                        // shoot(globalX + 100, globalY);
-                        // shoot(globalX - 120, globalY);
-                        // shoot(globalX + 120, globalY);
-                        // shoot(globalX - 140, globalY);
-                        // shoot(globalX + 140, globalY);
-                        // shoot(globalX - 160, globalY);
-                        // shoot(globalX + 160, globalY);
-                        // shoot(globalX - 180, globalY);
-                        // shoot(globalX + 180, globalY);
-                        // shoot(globalX - 200, globalY);
-                        // shoot(globalX + 200, globalY);
+                    BALL_INTERVAL = setInterval(function () {
+                        CURRENT_BALL_FUNCTION();
+                        //shoot(GLOBAL_X, GLOBAL_Y);
+                        // shoot(GLOBAL_X - 10, GLOBAL_Y);
+                        // shoot(GLOBAL_X + 10, GLOBAL_Y);
+                        // shoot(GLOBAL_X - 20, GLOBAL_Y);
+                        // shoot(GLOBAL_X + 20, GLOBAL_Y);
+                        // //shoot(GLOBAL_X - 30, GLOBAL_Y, 5);
+                        // //shoot(GLOBAL_X + 30, GLOBAL_Y, -5);
+                        // shoot(GLOBAL_X - 40, GLOBAL_Y);
+                        // shoot(GLOBAL_X + 40, GLOBAL_Y);
+                        // shoot(GLOBAL_X - 60, GLOBAL_Y);
+                        // shoot(GLOBAL_X + 60, GLOBAL_Y);
+                        // shoot(GLOBAL_X - 80, GLOBAL_Y);
+                        // shoot(GLOBAL_X + 80, GLOBAL_Y);
+                        // shoot(GLOBAL_X - 100, GLOBAL_Y);
+                        // shoot(GLOBAL_X + 100, GLOBAL_Y);
+                        // shoot(GLOBAL_X - 120, GLOBAL_Y);
+                        // shoot(GLOBAL_X + 120, GLOBAL_Y);
+                        // shoot(GLOBAL_X - 140, GLOBAL_Y);
+                        // shoot(GLOBAL_X + 140, GLOBAL_Y);
+                        // shoot(GLOBAL_X - 160, GLOBAL_Y);
+                        // shoot(GLOBAL_X + 160, GLOBAL_Y);
+                        // shoot(GLOBAL_X - 180, GLOBAL_Y);
+                        // shoot(GLOBAL_X + 180, GLOBAL_Y);
+                        // shoot(GLOBAL_X - 200, GLOBAL_Y);
+                        // shoot(GLOBAL_X + 200, GLOBAL_Y);
                     }, 180);
                 }
-                isFired = true;
+                IS_FIRED = true;
             }
 
             checkMove();
@@ -104,27 +115,28 @@ function startGame() {
     };
 
     window.onkeyup = function (e) {
-        isFired = false;
+        IS_FIRED = false;
         if (event.keyCode == 32) {
             // spacebar
-            clearInterval(ball_interval);
+            clearInterval(BALL_INTERVAL);
         }
     };
 }
 
+// push a method inside arrays and it will be executed by checkSpawner()
 function spawnEnemies() {
-    spawner_array.push(pattern1);
-    spawner_array.push(pattern_surprise1);
-    spawner_array.push(pattern_alien2);
-    spawner_array.push(pattern1);
-    spawner_array.push(pattern_surprise1);
-    spawner_array.push(pattern_alien2);
-    spawner_array.push(pattern1);
-    spawner_array.push(pattern_surprise1);
-    spawner_array.push(pattern_alien2);
-    spawner_array.push(pattern1);
-    spawner_array.push(pattern_surprise1);
-    spawner_array.push(pattern_alien2);
+    SPAWNER_ARRAY.push(pattern1);
+    SPAWNER_ARRAY.push(pattern_surprise1);
+    SPAWNER_ARRAY.push(pattern_alien2);
+    SPAWNER_ARRAY.push(pattern1);
+    SPAWNER_ARRAY.push(pattern_surprise1);
+    SPAWNER_ARRAY.push(pattern_alien2);
+    SPAWNER_ARRAY.push(pattern1);
+    SPAWNER_ARRAY.push(pattern_surprise1);
+    SPAWNER_ARRAY.push(pattern_alien2);
+    SPAWNER_ARRAY.push(pattern1);
+    SPAWNER_ARRAY.push(pattern_surprise1);
+    SPAWNER_ARRAY.push(pattern_alien2);
 
 
 
@@ -132,20 +144,17 @@ function spawnEnemies() {
 
 function checkSpawner() {
 
-    if (launchNextWave && spawner_counter < spawner_array.length) {
+    if (LAUNCH_NEXT_WAVE && SPAWNER_COUNTER < SPAWNER_ARRAY.length) {
 
-        var timeout = undefined;
-
-        timeout = setTimeout(function () {
-            spawner_array[spawner_counter]();
-            spawner_counter++;
-        }, 6000);
-
-        if (timeout) {
-            spawner_timeout_array.push(timeout);
+        let timeout_func = function () {
+            SPAWNER_ARRAY[SPAWNER_COUNTER]();
+            SPAWNER_COUNTER++;
         }
 
-        launchNextWave = false;
+        setTimeoutAndSave(timeout_func, 6000);
+
+
+        LAUNCH_NEXT_WAVE = false;
 
     }
 
@@ -157,46 +166,46 @@ function resetGame() {
 
     this.document.getElementById("welcome").innerHTML = "Game over, press ENTER to play again";
 
-    for (var i = 0; i < timeout_array.length; i++) {
-        clearTimeout(timeout_array[i]);
-        //timeout_array.splice(i, 1);
+    for (var i = 0; i < TIMEOUT_ARRAY.length; i++) {
+        clearTimeout(TIMEOUT_ARRAY[i]);
+
     }
 
-    for (var i = 0; i < spawner_timeout_array.length; i++) {
-        clearTimeout(spawner_timeout_array[i]);
-        //timeout_array.splice(i, 1);
+    for (var i = 0; i < SPAWNER_TIMEOUT_ARRAY.length; i++) {
+        clearTimeout(SPAWNER_TIMEOUT_ARRAY[i]);
+
     }
 
-    spawner_timeout_array = [];
+    SPAWNER_TIMEOUT_ARRAY = [];
 
-    launchNextWave = true;
+    LAUNCH_NEXT_WAVE = true;
 
-    spawner_counter = 0;
+    SPAWNER_COUNTER = 0;
 
-    isGameOver = false;
-    ship_x = canvas.width / 2;
-    ship_y = canvas.height - 50;
-    globalX = ship_x; // location of ship when it moves
-    globalY = ship_y; // location of ship when it moves
-    array_bullet = [];
-    array_alien = [];
-    array_explode = [];
-    array_ship = [];
-    array_hitbox = [];
-    all_array = [
-        array_bullet,
-        array_explode,
-        array_alien,
-        array_ship,
-        array_hitbox
+    IS_GAME_OVER = false;
+    SHIP_X = CANVAS.width / 2;
+    SHIP_Y = CANVAS.height - 50;
+    GLOBAL_X = SHIP_X; // location of ship when it moves
+    GLOBAL_Y = SHIP_Y; // location of ship when it moves
+    ARRAY_BULLET = [];
+    ARRAY_ALIEN = [];
+    ARRAY_EXPLODE = [];
+    ARRAY_SHIP = [];
+    ARRAY_HITBOX = [];
+    ALL_ARRAY = [
+        ARRAY_BULLET,
+        ARRAY_EXPLODE,
+        ARRAY_ALIEN,
+        ARRAY_SHIP,
+        ARRAY_HITBOX
     ]; // for looping purpose
 
-    scoreboard = 0;
+    SCOREBOARD = 0;
 
-    timeout_array = [];
+    TIMEOUT_ARRAY = [];
 
-    spawner_array = [];
-    ctx.drawImage(space_image, 0, 0, canvas.width, canvas.height);
+    SPAWNER_ARRAY = [];
+    CTX.drawImage(SPACE_IMAGE, 0, 0, CANVAS.width, CANVAS.height);
 
     window.onkeydown = function (e) {
         if (event.keyCode == 13) {

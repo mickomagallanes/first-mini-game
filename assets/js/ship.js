@@ -1,28 +1,29 @@
 class ship {
     constructor() {
-        this.x = ship_x;
-        this.y = ship_y;
+        this.x = SHIP_X;
+        this.y = SHIP_Y;
         this.dx = 0;
         this.dy = 0;
+        this.size = SHIP_SIZE;
         this.isDead = 0;
-        this.hitbox_width = ship_size / 2;
-        this.hitbox_height = ship_size - 10;
-        this.hitbox_x = globalX - this.hitbox_width / 2;
-        this.hitbox_y = globalY - this.hitbox_height / 2;
+        this.hitbox_width = this.size / 2;
+        this.hitbox_height = this.size - 10;
+        this.hitbox_x = GLOBAL_X - this.hitbox_width / 2;
+        this.hitbox_y = GLOBAL_Y - this.hitbox_height / 2;
 
     }
 
     Trigger() {
-        this.x = globalX;
-        this.y = globalY;
-        this.hitbox_x = globalX - this.hitbox_width / 2;
-        this.hitbox_y = globalY - this.hitbox_height / 2;
+        this.x = GLOBAL_X;
+        this.y = GLOBAL_Y;
+        this.hitbox_x = GLOBAL_X - this.hitbox_width / 2;
+        this.hitbox_y = GLOBAL_Y - this.hitbox_height / 2;
         if (!this.isDead) {
             this.drawShip();
             //this.drawHitbox();
         } else {
             triggerExplode(this);
-            isGameOver = true;
+            IS_GAME_OVER = true;
             return false;
         }
 
@@ -30,25 +31,25 @@ class ship {
     }
 
     drawHitbox() {
-        ctx.beginPath();
-        ctx.rect(this.hitbox_x, this.hitbox_y, this.hitbox_width, this.hitbox_height);
-        ctx.fillStyle = "red";
-        ctx.fill();
+        CTX.beginPath();
+        CTX.rect(this.hitbox_x, this.hitbox_y, this.hitbox_width, this.hitbox_height);
+        CTX.fillStyle = "red";
+        CTX.fill();
 
     }
 
     checkIfDead() {
-        for (var i = 0; i < array_alien.length; i++) {
-            if (rect2rect_intersects(this, array_alien[i])) {
+        for (var i = 0; i < ARRAY_ALIEN.length; i++) {
+            if (rect2rect_intersects(this, ARRAY_ALIEN[i])) {
                 // set alien and bullet dead
                 this.isDead = 1;
-                array_alien[i].isDead = 1;
-                clearInterval(ball_interval);
+                ARRAY_ALIEN[i].isDead = 1;
+                clearInterval(BALL_INTERVAL);
             }
         }
     }
 
     drawShip() {
-        ctx.drawImage(ship_image, this.x - 40, this.y - 40, ship_size, ship_size);
+        CTX.drawImage(SHIP_IMAGE, this.x - 40, this.y - 40, this.size, this.size);
     }
 }

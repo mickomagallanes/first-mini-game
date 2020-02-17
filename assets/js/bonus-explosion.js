@@ -1,8 +1,5 @@
-class explode {
-    constructor(entity) {
-        this.x = entity.x;
-        this.y = entity.y;
-        this.size = entity.size
+class bonus_explode {
+    constructor() {
         this.isDead = 0;
         this.sprite_x = 0;
         this.sprite_y = 0;
@@ -22,13 +19,13 @@ class explode {
             }
 
             CTX.drawImage(
-                EXPLOSION_IMAGE,
+                BONUS_EFFECT_IMAGE,
                 this.sprite_x,
                 this.sprite_y,
                 128,
                 128,
-                this.x - (this.size / 2),
-                this.y - (this.size / 2),
+                GLOBAL_X - (SHIP_SIZE / 2),
+                GLOBAL_Y - (SHIP_SIZE / 2),
                 80,
                 80
             );
