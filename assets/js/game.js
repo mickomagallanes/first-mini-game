@@ -350,9 +350,9 @@ function spawn_bonus_2x() {
 
     let spaces = roll_whole(20, 460);
 
-    var bonus_object = new bonus(spaces, BONUS_IMAGE_2X, setDoubleBullet);
-    ARRAY_BONUS.push(bonus_object);
+    let bonus_object = new bonus(spaces, BONUS_IMAGE_2X, setDoubleBullet);
 
+    ARRAY_BONUS.push(bonus_object);
 
 }
 
@@ -397,6 +397,14 @@ function invertDice(die) {
 }
 
 function setTimeoutAndSave(func, secs) {
+    var timeout = setTimeout(func, secs);
+
+    if (timeout) {
+        TIMEOUT_ARRAY.push(timeout);
+    }
+}
+
+function setSpawnerTimeoutAndSave(func, secs) {
     var timeout = setTimeout(func, secs);
 
     if (timeout) {

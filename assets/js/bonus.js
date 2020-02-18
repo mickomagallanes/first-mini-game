@@ -40,7 +40,7 @@ class bonus {
     }
 
     checkIfDead() {
-        if (rect2rect_intersects(ARRAY_SHIP[0], this)) {
+        if (ARRAY_SHIP[0] && rect2rect_intersects(ARRAY_SHIP[0], this)) {
             triggerBonusEffect(ARRAY_SHIP[0]);
             this.bonus_function();
             this.isDead = 1;

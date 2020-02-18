@@ -53,6 +53,9 @@ function startGame() {
     var ship_object = new ship();
     ARRAY_SHIP.push(ship_object);
 
+    setDefaultBullet();
+    spawnEnemies();
+
     // TODO: roll on every 3 rounds, then roll on seconds and spawn bonus
     // TODO: show timer of bonus
     let timeout_func = function () {
@@ -60,8 +63,6 @@ function startGame() {
     }
 
     setTimeoutAndSave(timeout_func, roll_thousands(12, 20));
-
-    spawnEnemies();
 
     ScreenTimer();
 
@@ -151,7 +152,7 @@ function checkSpawner() {
             SPAWNER_COUNTER++;
         }
 
-        setTimeoutAndSave(timeout_func, 6000);
+        setSpawnerTimeoutAndSave(timeout_func, 6000);
 
 
         LAUNCH_NEXT_WAVE = false;
@@ -192,12 +193,16 @@ function resetGame() {
     ARRAY_EXPLODE = [];
     ARRAY_SHIP = [];
     ARRAY_HITBOX = [];
+    ARRAY_BONUS = [];
+    ARRAY_BONUS_EXPLODE = [];
     ALL_ARRAY = [
         ARRAY_BULLET,
         ARRAY_EXPLODE,
         ARRAY_ALIEN,
         ARRAY_SHIP,
-        ARRAY_HITBOX
+        ARRAY_HITBOX,
+        ARRAY_BONUS,
+        ARRAY_BONUS_EXPLODE
     ]; // for looping purpose
 
     SCOREBOARD = 0;
