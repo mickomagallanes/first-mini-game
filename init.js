@@ -56,14 +56,6 @@ function startGame() {
     setDefaultBullet();
     spawnEnemies();
 
-    // TODO: roll on every 3 rounds, then roll on seconds and spawn bonus
-    // TODO: show timer of bonus
-    let timeout_func = function () {
-        spawn_bonus_2x();
-    }
-
-    setTimeoutAndSave(timeout_func, roll_thousands(12, 20));
-
     ScreenTimer();
 
 
@@ -126,26 +118,27 @@ function startGame() {
 
 // push a method inside arrays and it will be executed by checkSpawner()
 function spawnEnemies() {
-    SPAWNER_ARRAY.push(pattern1);
-    SPAWNER_ARRAY.push(pattern_surprise1);
-    SPAWNER_ARRAY.push(pattern_alien2);
-    SPAWNER_ARRAY.push(pattern1);
-    SPAWNER_ARRAY.push(pattern_surprise1);
-    SPAWNER_ARRAY.push(pattern_alien2);
-    SPAWNER_ARRAY.push(pattern1);
-    SPAWNER_ARRAY.push(pattern_surprise1);
-    SPAWNER_ARRAY.push(pattern_alien2);
-    SPAWNER_ARRAY.push(pattern1);
-    SPAWNER_ARRAY.push(pattern_surprise1);
-    SPAWNER_ARRAY.push(pattern_alien2);
 
-
-
+    for (var i = 0; i <= 100; i++) {
+        SPAWNER_ARRAY.push(pattern1);
+        SPAWNER_ARRAY.push(pattern_surprise1);
+        SPAWNER_ARRAY.push(pattern_alien2);
+    }
 }
 
 function checkSpawner() {
 
     if (LAUNCH_NEXT_WAVE && SPAWNER_COUNTER < SPAWNER_ARRAY.length) {
+        if (SPAWNER_COUNTER == 0 || SPAWNER_COUNTER % 3 == 0) {
+            // TODO: roll on every 3 rounds, then roll on seconds and spawn bonus
+            // TODO: show timer of bonus
+
+            let timeout_func = function () {
+                spawn_bonus_2x();
+            }
+
+            setTimeoutAndSave(timeout_func, roll_thousands(20, 153));
+        }
 
         let timeout_func = function () {
             SPAWNER_ARRAY[SPAWNER_COUNTER]();
