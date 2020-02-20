@@ -13,3 +13,4 @@ Before, I was calculating the center point of the BULLET if its inside the ENEMY
 
 I didn't expected that it would worked so well. But I just wonder how does it magically computes the distance? So simple, everyone might know it, its the Pythagorean Theorem! The distance of the 2 center points can be found by drawing a line between those points, and then make a right triangle with that line as the hypotenuse. Solve for it and its done! 
 
+2020 update: lots of things learned, this project is so much fun to do. I always think about new features that I can add on. I learned Javascript mostly because of this project. 
