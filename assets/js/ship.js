@@ -42,9 +42,9 @@ class ship {
         for (var i = 0; i < ARRAY_ALIEN.length; i++) {
             if (rect2rect_intersects(this, ARRAY_ALIEN[i])) {
                 // set alien and bullet dead
-                //this.isDead = 1;
+                this.isDead = 1;
                 ARRAY_ALIEN[i].isDead = 1;
-                //clearInterval(BALL_INTERVAL);
+                clearInterval(BALL_INTERVAL);
             }
         }
     }

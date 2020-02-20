@@ -174,8 +174,6 @@ function pattern1() {
         }
     };
 
-    var timeout = undefined;
-
     for (let i = 1; i <= ALIEN_QUANTITY; i++) {
 
         let spaces = roll_whole(20, 460);
@@ -243,8 +241,6 @@ function pattern_surprise1() {
             this.y += 10;
         }
     };
-
-    var timeout = undefined;
 
     for (let i = 1; i <= ALIEN_QUANTITY; i++) {
 
@@ -320,8 +316,6 @@ function pattern_alien2() {
             return false;
         }
     }
-
-    var timeout = undefined;
 
     for (let i = 1; i <= ALIEN_QUANTITY; i++) {
 
