@@ -56,6 +56,8 @@ function startGame() {
     setDefaultBullet();
     spawnEnemies();
 
+    rollRoundBonus();
+
     ScreenTimer();
 
 
@@ -129,15 +131,19 @@ function spawnEnemies() {
 function checkSpawner() {
 
     if (LAUNCH_NEXT_WAVE && SPAWNER_COUNTER < SPAWNER_ARRAY.length) {
-        if (SPAWNER_COUNTER == 0 || SPAWNER_COUNTER % 3 == 0) {
-            // TODO: roll on every 3 rounds, then roll on seconds and spawn bonus
-            // TODO: show timer of bonus
+        console.log(CURRENT_ROUND_BONUS + " reounfas");
+        if (CURRENT_ROUND_BONUS == null && SPAWNER_COUNTER % 3 == 0) {
+            rollRoundBonus();
+        }
+        if (CURRENT_ROUND_BONUS == SPAWNER_COUNTER) {
+
+            CURRENT_ROUND_BONUS = null;
 
             let timeout_func = function () {
                 spawn_bonus_2x();
             }
 
-            setTimeoutAndSave(timeout_func, roll_thousands(20, 153));
+            setTimeoutAndSave(timeout_func, roll_thousands(9, 58));
         }
 
         let timeout_func = function () {

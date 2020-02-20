@@ -411,3 +411,9 @@ function setSpawnerTimeoutAndSave(func, secs) {
         SPAWNER_TIMEOUT_ARRAY.push(timeout);
     }
 }
+
+function rollRoundBonus() {
+    // max number is the max round
+    let rolled = roll_whole(0, 2);
+    CURRENT_ROUND_BONUS = SPAWNER_COUNTER + rolled;
+}

@@ -71,6 +71,8 @@ var CURRENT_BALL_FUNCTION = function () {
     shoot(GLOBAL_X, GLOBAL_Y);
 }
 
+var CURRENT_ROUND_BONUS = null;
+
 var SHIP_IMAGE = new Image();
 SHIP_IMAGE.src = "assets/img/ship.png";
 
