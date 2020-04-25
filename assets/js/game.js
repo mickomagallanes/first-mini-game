@@ -20,19 +20,19 @@ function shoot(x, y, angle) {
 function checkMove() {
     // left
     if (event.keyCode == 37 && !(GLOBAL_X <= 0)) {
-        GLOBAL_X -= 10;
+        GLOBAL_X -= 12;
     }
     // up
     else if (event.keyCode == 38 && !(GLOBAL_Y <= 0 + SHIP_RADIUS)) {
-        GLOBAL_Y -= 10;
+        GLOBAL_Y -= 12;
     }
     // right
     else if (event.keyCode == 39 && !(GLOBAL_X >= CANVAS.width)) {
-        GLOBAL_X += 10;
+        GLOBAL_X += 12;
     }
     // down
     else if (event.keyCode == 40 && !(GLOBAL_Y >= CANVAS.height - SHIP_RADIUS)) {
-        GLOBAL_Y += 10;
+        GLOBAL_Y += 12;
     }
 }
 

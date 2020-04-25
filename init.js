@@ -125,8 +125,8 @@ function startGame() {
 function spawnEnemies() {
 
     for (var i = 0; i <= 100; i++) {
-        SPAWNER_ARRAY.push(pattern1);
         SPAWNER_ARRAY.push(pattern_surprise1);
+        SPAWNER_ARRAY.push(pattern1);
         SPAWNER_ARRAY.push(pattern_alien2);
     }
 }
