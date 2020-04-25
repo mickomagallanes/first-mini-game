@@ -1,4 +1,5 @@
 class alien {
+    // life_func is for alien who have multiple life
     constructor(x, alien_img, movement_func, life_func) {
         this.movement_func = movement_func;
 

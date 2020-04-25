@@ -7,13 +7,15 @@ window.onkeydown = function (e) {
 
 this.document.getElementById("scoreboard").style.display = "none";
 this.document.getElementById("labelScore").style.display = "none";
-CTX.drawImage(SPACE_IMAGE, 0, 0, CANVAS.width, CANVAS.height);
+CTX.fillStyle = "#02012e";
+CTX.fillRect(0, 0, CANVAS.width, CANVAS.height);
 
 
 function ScreenTimer() {
     // clear drawings
-    CTX.drawImage(SPACE_IMAGE, 0, 0, CANVAS.width, CANVAS.height);
 
+    CTX.fillRect(0, 0, CANVAS.width, CANVAS.height);
+    spawnStars.execute();
     this.document.getElementById("scoreboard").innerHTML = SCOREBOARD;
 
     checkSpawner();
@@ -45,6 +47,7 @@ function ScreenTimer() {
     }
 
     REQUEST_ID = requestAnimationFrame(ScreenTimer);
+
 }
 
 function startGame() {
@@ -128,13 +131,37 @@ function spawnEnemies() {
     }
 }
 
+var spawnStars = (function () {
+    var counter = 0;
+
+    return {
+        resetCounter: function () {
+            counter = 0;
+        },
+
+        execute: function () {
+            if (!(counter % 35)) {
+                let rollRadius = roll_whole(8, 17);
+                let rollImg = roll_whole(0, 2)
+                let rollSpaces = roll_whole(5, 475);
+                let star = new stars(rollSpaces, STAR_IMAGE_ARRAY[rollImg], rollRadius);
+                ARRAY_STARS.push(star);
+            }
+            counter++;
+        }
+    }
+
+})()
+
 function checkSpawner() {
 
     if (LAUNCH_NEXT_WAVE && SPAWNER_COUNTER < SPAWNER_ARRAY.length) {
-        console.log(CURRENT_ROUND_BONUS + " reounfas");
+        // for spawning the bonus on every 3rd round
         if (CURRENT_ROUND_BONUS == null && SPAWNER_COUNTER % 3 == 0) {
+            // rolls on what round in the 3 rounds should bonus spawned
             rollRoundBonus();
         }
+        // if rolled round bonus has arrived, then spawn bonus
         if (CURRENT_ROUND_BONUS == SPAWNER_COUNTER) {
 
             CURRENT_ROUND_BONUS = null;
@@ -187,6 +214,7 @@ function resetGame() {
     SHIP_Y = CANVAS.height - 50;
     GLOBAL_X = SHIP_X; // location of ship when it moves
     GLOBAL_Y = SHIP_Y; // location of ship when it moves
+    ARRAY_STARS = [];
     ARRAY_BULLET = [];
     ARRAY_ALIEN = [];
     ARRAY_EXPLODE = [];
@@ -195,6 +223,7 @@ function resetGame() {
     ARRAY_BONUS = [];
     ARRAY_BONUS_EXPLODE = [];
     ALL_ARRAY = [
+        ARRAY_STARS,
         ARRAY_BULLET,
         ARRAY_EXPLODE,
         ARRAY_ALIEN,
@@ -209,8 +238,9 @@ function resetGame() {
     TIMEOUT_ARRAY = [];
 
     SPAWNER_ARRAY = [];
-    CTX.drawImage(SPACE_IMAGE, 0, 0, CANVAS.width, CANVAS.height);
 
+    spawnStars.resetCounter();
+    CTX.fillRect(0, 0, CANVAS.width, CANVAS.height);
     window.onkeydown = function (e) {
         if (event.keyCode == 13) {
             this.document.getElementById("welcome").style.display = "none";

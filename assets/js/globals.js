@@ -42,6 +42,7 @@ var SCOREBOARD = 0;
 var GLOBAL_X = SHIP_X; // location of ship when it moves
 var GLOBAL_Y = SHIP_Y; // location of ship when it moves
 
+var ARRAY_STARS = []
 var ARRAY_BULLET = [];
 var ARRAY_ALIEN = [];
 var ARRAY_EXPLODE = [];
@@ -50,6 +51,7 @@ var ARRAY_HITBOX = [];
 var ARRAY_BONUS = [];
 var ARRAY_BONUS_EXPLODE = [];
 var ALL_ARRAY = [
+    ARRAY_STARS,
     ARRAY_BULLET,
     ARRAY_EXPLODE,
     ARRAY_ALIEN,
@@ -57,6 +59,7 @@ var ALL_ARRAY = [
     ARRAY_HITBOX,
     ARRAY_BONUS,
     ARRAY_BONUS_EXPLODE
+
 ]; // for looping purpose
 
 var TIMEOUT_ARRAY = [];
@@ -88,5 +91,16 @@ var BONUS_SOUND = new Audio("assets/mp3/bonus.mp3");
 var SPACE_IMAGE = new Image();
 SPACE_IMAGE.src = "assets/img/space.jpg";
 
+
+var STAR1 = new Image();
+STAR1.src = "assets/img/star1.png";
+
+var STAR2 = new Image();
+STAR2.src = "assets/img/star2.png";
+
+var STAR3 = new Image();
+STAR3.src = "assets/img/star3.png";
+
+var STAR_IMAGE_ARRAY = [STAR1, STAR2, STAR3];
 var BONUS_EFFECT_IMAGE = new Image();
 BONUS_EFFECT_IMAGE.src = "assets/img/bonus-effect.png";
