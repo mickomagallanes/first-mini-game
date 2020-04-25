@@ -74,6 +74,7 @@ function startGame() {
         if (ARRAY_SHIP[0]) {
             if (!IS_FIRED) {
                 if (event.keyCode == 32) {
+                    clearInterval(BALL_INTERVAL);
                     // spacebar
                     BALL_INTERVAL = setInterval(function () {
                         CURRENT_BALL_FUNCTION();
