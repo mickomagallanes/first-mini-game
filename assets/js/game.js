@@ -219,7 +219,7 @@ function pattern_surprise1() {
         }
 
 
-        if (this.y + 50 >= CANVAS.height / 2) {
+        if (this.y + 50 >= (CANVAS.height / 2) - 50) {
 
             if (this.roll_dice) {
                 this.x += this.roll_dec;
